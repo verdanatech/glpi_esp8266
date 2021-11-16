@@ -31,8 +31,8 @@
 name=glpi_esp8266
 version=1.0.0
 author=Verdanatech Soluções em TI    halexsandro.sales@verdanatech.com
-sentence - It performs the integration between the GLPi system and the ESP8266
-paragraph - The glpi_esp8266 library has the mission of enabling Companies or Service Departments 
+sentence=It performs the integration between the GLPi system and the ESP8266
+paragraph=The glpi_esp8266 library has the mission of enabling Companies or Service Departments 
 to bring a greater level of intelligence to their Businesses, reduce resources through 
 active monitoring and accelerate the delivery of Value to their Clients.
 category=Communication
