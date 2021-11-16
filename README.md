@@ -2,7 +2,11 @@
 
 glpi_esp8266 Consumes Verdanatech's vConnector API, thus allowing integration between IoT system with the GLPi management system.
 
+<<<<<<< HEAD
 # License
+=======
+# license
+>>>>>>> 40551991b322127e0dcfb08de3b9f8b4a580a92e
 
 ---
 
@@ -13,7 +17,11 @@ https://verdanatech.com
 
 ---
 
+<<<<<<< HEAD
 ## LICENSE
+=======
+LICENSE
+>>>>>>> 40551991b322127e0dcfb08de3b9f8b4a580a92e
 
 This file is part of glpi_esp8266.
 
@@ -34,7 +42,11 @@ along with glpi_esp8266. If not, see <http://www.gnu.org/licenses/>.
 
 ---
 
+<<<<<<< HEAD
 # Dependencies
+=======
+# dependencies
+>>>>>>> 40551991b322127e0dcfb08de3b9f8b4a580a92e
 
 Requires import of libraries ESP8266HTTPClient.h, ESP8266WiFi.h
 
