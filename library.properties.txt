@@ -1,5 +1,5 @@
 name=glpi_esp8266
-version=0.0.1
+version=0.0.2
 author=Verdanatech Soluções em TI    halexsandro.sales@verdanatech.com
 maintainer=Verdanatech Soluções em TI    halexsandro.sales@verdanatech.com
 sentence=It performs the integration between the GLPi system and the ESP8266
