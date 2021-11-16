@@ -30,11 +30,11 @@
 
 name=glpi_esp8266
 version=1.0.0
-author=Verdanatech
-sentence=Supports HTTP1.1 and you can do GET and POST.
-paragraph=In normal use, the programmer creates the objects according to his project and using 
-the library functions, makes the request to the vConnector API that makes the request to the 
-GLPi and opens a call returning an ID that can be used for other requests.
+author=Verdanatech Soluções em TI    halexsandro.sales@verdanatech.com
+sentence - It performs the integration between the GLPi system and the ESP8266
+paragraph - The glpi_esp8266 library has the mission of enabling Companies or Service Departments 
+to bring a greater level of intelligence to their Businesses, reduce resources through 
+active monitoring and accelerate the delivery of Value to their Clients.
 category=Communication
 url=https://github.com/verdanatech/glpi_esp8266
 architectures=esp8266
