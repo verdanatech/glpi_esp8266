@@ -28,67 +28,69 @@
  * ---------------------------------------------------------------------
  */
 
-
 #ifndef glpi_esp
 
 #define glpi_esp
 
-
 #include <ESP8266HTTPClient.h>
 #include <ESP8266WiFi.h>
 
-class Tickets {
+class Tickets
+{
 
-  private:   char*  _ticket_name;
-             int    _ticket_type;
-             char*  _category_name;
-             int    _ticket_priority;
-             char*  _ticket_description;
-             long   _event_id;
-             char*  _asset_name;
-             char*  token_iot;
-             char*  token_client;
-             char*  serverNameon;
-             char*  httpsRequestData;
-             int    httpsResponseCode;
-             char*  _solution_description;
-             char*  _followup_content;
-             char*  _task_content;
-             int    _task_state;
-             int    _task_time;
-             String _ticket_id;
+private:
+  char *_ticket_name;
+  int _ticket_type;
+  char *_category_name;
+  int _ticket_priority;
+  char *_ticket_description;
+  long _event_id;
+  char *_asset_name;
+  char *token_iot;
+  char *token_client;
+  char *serverNameon;
+  char *httpsRequestData;
+  int httpsResponseCode;
+  char *_solution_description;
+  char *_followup_content;
+  char *_task_content;
+  int _task_state;
+  int _task_time;
+  String _ticket_id;
+  String _url_base;
 
-  public:  Tickets (char* ticket_name, int ticket_type, char* category_name, int ticket_priority, char* ticket_description, char* asset_name);
-           void new_ticket      (char* token_iot, char* token_client);
-           void solution_ticket (char* solution_description, char* token_iot, char* token_client);
-           void followup_ticket (char* followup_content, char* token_iot, char* token_client);
-           void task_ticket     (char* task_content, int task_state, int task_time, char* token_iot, char* token_client);
+public:
+  Tickets(char *ticket_name, int ticket_type, char *category_name, int ticket_priority, char *ticket_description, char *asset_name);
+  void new_ticket(char *token_iot, char *token_client);
+  void solution_ticket(char *solution_description, char *token_iot, char *token_client);
+  void followup_ticket(char *followup_content, char *token_iot, char *token_client);
+  void task_ticket(char *task_content, int task_state, int task_time, char *token_iot, char *token_client);
 };
 
+class Problems
+{
 
-class Problems {
+private:
+  char *_problem_name;
+  char *_category_name;
+  int _problem_priority;
+  char *_problem_description;
+  int _event_id;
+  char *_asset_name;
+  char *token_iot;
+  char *token_client;
+  char *serverNameon;
+  char *httpsRequestData;
+  int httpsResponseCode;
+  char *_followup_content;
+  char *_solution_description;
+  String _problem_id;
 
-  private: 
-            char*   _problem_name;
-            char*   _category_name;
-            int     _problem_priority;
-            char*   _problem_description;
-            int     _event_id;
-            char*   _asset_name;
-            char*   token_iot;
-            char*   token_client;
-            char*   serverNameon;
-            char*   httpsRequestData;
-            int     httpsResponseCode;
-            char*   _followup_content;
-            char*   _solution_description;
-            String  _problem_id;
-
-
-  public: Problems (char* problem_name, char* category_name, int problem_priority, char* problem_description, char* asset_name);
-          void new_problem (char* token_iot, char* token_client);
-          void solution_problem (char* solution_description, char* token_iot, char* token_client);
-          void followup_problem (char* followup_content, char* token_iot, char* token_client);
+public:
+  Problems(char *problem_name, char *category_name, int problem_priority, char *problem_description, char *asset_name);
+  void new_problem(char *token_iot, char *token_client);
+  void solution_problem(char *solution_description, char *token_iot, char *token_client);
+  void followup_problem(char *followup_content, char *token_iot, char *token_client);
 };
 
 #endif
