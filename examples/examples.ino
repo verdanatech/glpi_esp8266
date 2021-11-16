@@ -1,29 +1,73 @@
-/**
- * ---------------------------------------------------------------------
- * glpi_esp8266 - Integration library between GLPi and esp8266
- * Copyright (C) 2021 Verdanatech Soluções em TI and contributors.
- *
- * https://verdanatech.com
- *
- * ---------------------------------------------------------------------
- *
- * LICENSE
- *
- * This file is part of glpi_esp8266.
- *
- * glpi_esp8266 is free software developed and supported
- * by Verdanatech Soluções em TI and contributors
- * You can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
- *
- * glpi_esp8266 is distributed in the hope that it will be useful,
- * but without any warranty; without even the implied warranty of
- * merchantantability or fitness for a particular purpose.
- * See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with glpi_esp8266. If not, see <http://www.gnu.org/licenses/>.
- * ---------------------------------------------------------------------
+#include <glpi_esp8266.h>
+ 
+char* HOSTNAME = "verdanadeskIoT"; //Hostname do equipamento na Rede LAN
+char SSID[]   = "..."; //SSID da rede
+char NETKEY[]  = "..."; //Chave de acesso a rede
+
+int tentativas = 50;
+
+
+void printNetworkData(){
+
+  Serial.println();
+  Serial.println("- - - - - - - -");
+  Serial.println("Hostname: "+ (String)HOSTNAME);
+    
+  Serial.println("Conectado em: "+ (String)SSID);
+
+  Serial.print("Meu endereço IP: ");
+  Serial.println(WiFi.localIP());
+
+  Serial.print("MAC: ");
+ // Serial.println(WiFi.macAddress());
+  
+  Serial.println("- - - - - - - -");
+  
+}
+
+void wifiConect(){
+  
+/*
+ * Realiza a conexão da esp8266 com a rede wifi
  */
+
+  delay(2000); //Um pequeno atraso para conseguir pegar os dados via Serial
+  Serial.println();
+  Serial.print("Connecting to ");
+  Serial.println(SSID);
+
+  WiFi.begin(SSID, NETKEY);
+
+  // Definindo hostname da placa para LAN
+//  WiFi.hostname(HOSTNAME);
+    
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    delay(500);
+    Serial.print(".");
+    tentativas--;
+      
+    if (tentativas == 0)
+    {
+      Serial.println();
+      Serial.println("Time-out. Verifique as configurações e tente novamente.");
+      delay(1000);
+        
+      //while(true);
+    }
+      
+  }
+  
+}
+
+void setup(void){
+
+  //inicialização da comunicação com a porta serial
+  Serial.begin(115200);
+  wifiConect();
+  delay(2000);
+  printNetworkData();
+}
+
+void loop(void){
+}

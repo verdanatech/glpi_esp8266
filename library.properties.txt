@@ -1,40 +1,9 @@
-/**
- * ---------------------------------------------------------------------
- * glpi_esp8266 - Integration library between GLPi and esp8266
- * Copyright (C) 2021 Verdanatech Soluções em TI and contributors.
- *
- * https://verdanatech.com
- *
- * ---------------------------------------------------------------------
- *
- * LICENSE
- *
- * This file is part of glpi_esp8266.
- *
- * glpi_esp8266 is free software developed and supported
- * by Verdanatech Soluções em TI and contributors
- * You can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
- *
- * glpi_esp8266 is distributed in the hope that it will be useful,
- * but without any warranty; without even the implied warranty of
- * merchantantability or fitness for a particular purpose.
- * See the GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with glpi_esp8266. If not, see <http://www.gnu.org/licenses/>.
- * ---------------------------------------------------------------------
- */
-
 name=glpi_esp8266
-version=1.0.0
+version=0.0.1
 author=Verdanatech Soluções em TI    halexsandro.sales@verdanatech.com
+maintainer=Verdanatech Soluções em TI    halexsandro.sales@verdanatech.com
 sentence=It performs the integration between the GLPi system and the ESP8266
-paragraph=The glpi_esp8266 library has the mission of enabling Companies or Service Departments 
-to bring a greater level of intelligence to their Businesses, reduce resources through 
-active monitoring and accelerate the delivery of Value to their Clients.
+paragraph=The glpi_esp8266 library has the mission of enabling Companies or Service Departments to bring a greater level of intelligence to their Businesses, reduce resources through active monitoring and accelerate the delivery of Value to their Clients.
 category=Communication
 url=https://github.com/verdanatech/glpi_esp8266
 architectures=esp8266
