@@ -97,7 +97,7 @@ private:
 
 public:
   Problems(char *problem_name, char *category_name, int problem_priority, char *problem_description, char *asset_name);
-  void new_problem(char *token_iot, char *token_client);
+  void new_problem();
   void solution_problem(char *solution_description, char *token_iot, char *token_client);
   void followup_problem(char *followup_content, char *token_iot, char *token_client);
 };

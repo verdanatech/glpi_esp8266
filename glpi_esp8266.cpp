@@ -221,7 +221,7 @@ Problems::Problems(char *problem_name, char *category_name, int problem_priority
     _url_base = "https://vconnector2.verdanadesk.com/api/iot/";
 };
 
-void Problems::new_problem(char *token_iot, char *token_client)
+void Problems::new_problem()
 {
     BearSSL::WiFiClientSecure client;
     client.setInsecure();
@@ -231,8 +231,8 @@ void Problems::new_problem(char *token_iot, char *token_client)
     https.begin(client, serverNameon);
 
     https.addHeader("Content-Type", "application/x-www-form-urlencoded");
-    https.addHeader("token-client", token_client);
-    https.addHeader("token-iot", token_iot);
+    https.addHeader("token-client", _token_client);
+    https.addHeader("token-iot", _token_iot);
 
     String httpsRequestData = ("problem_name= " + (String)_problem_name + "&category_name= " + (String)_category_name + "&problem_description= " + (String)_problem_description + "&problem_priority= " + (int)_problem_priority + "&event_id= " + (int)_event_id + "&asset_name= " + (String)_asset_name);
     int httpsResponseCode = https.POST(httpsRequestData);
