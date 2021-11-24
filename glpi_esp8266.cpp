@@ -185,7 +185,7 @@ void Tickets::task_ticket(char *task_content, int task_state, int task_time)
     https.addHeader("token-client", _token_client);
     https.addHeader("token-iot", _token_iot);
 
-    String httpsRequestData = ("task_content= " + (String)task_content + "&task_state= " + (int)_task_state + "&task_time= " + (int)task_time);
+    String httpsRequestData = ("task_content= " + (String)task_content + "&task_state= " + (int)task_state + "&task_time= " + (int)task_time);
     int httpsResponseCode = https.POST(httpsRequestData);
 
     if (httpsResponseCode > 0)
