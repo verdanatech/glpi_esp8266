@@ -46,8 +46,6 @@ private:
   char *_ticket_description;
   long _event_id;
   char *_asset_name;
-  char *token_iot;
-  char *token_client;
   char *serverNameon;
   char *httpsRequestData;
   int httpsResponseCode;
@@ -61,10 +59,20 @@ private:
 
 public:
   Tickets(char *ticket_name, int ticket_type, char *category_name, int ticket_priority, char *ticket_description, char *asset_name);
-  void new_ticket(char *token_iot, char *token_client);
-  void solution_ticket(char *solution_description, char *token_iot, char *token_client);
-  void followup_ticket(char *followup_content, char *token_iot, char *token_client);
+  void new_ticket();
+  void solution_ticket(char *solution_description);
+  void followup_ticket(char *followup_content);
   void task_ticket(char *task_content, int task_state, int task_time, char *token_iot, char *token_client);
+};
+
+// authorization
+class Authorization
+{
+public:
+  char *token_iot = 0;
+  char *token_client = 0;
+
+  Authorization(char *token_iot, char *token_client);
 };
 
 class Problems
@@ -85,6 +93,7 @@ private:
   char *_followup_content;
   char *_solution_description;
   String _problem_id;
+  String _url_base;
 
 public:
   Problems(char *problem_name, char *category_name, int problem_priority, char *problem_description, char *asset_name);
