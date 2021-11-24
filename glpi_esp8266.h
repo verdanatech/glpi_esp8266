@@ -62,7 +62,7 @@ public:
   void new_ticket();
   void solution_ticket(char *solution_description);
   void followup_ticket(char *followup_content);
-  void task_ticket(char *task_content, int task_state, int task_time, char *token_iot, char *token_client);
+  void task_ticket(char *task_content, int task_state, int task_time);
 };
 
 // authorization

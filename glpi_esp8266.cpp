@@ -172,7 +172,7 @@ void Tickets::followup_ticket(char *followup_content)
     https.end();
 };
 
-void Tickets::task_ticket(char *task_content, int task_state, int task_time, char *token_iot, char *token_client)
+void Tickets::task_ticket(char *task_content, int task_state, int task_time)
 
 {
     BearSSL::WiFiClientSecure client;
@@ -182,8 +182,8 @@ void Tickets::task_ticket(char *task_content, int task_state, int task_time, cha
     https.begin(client, serverNameon);
 
     https.addHeader("Content-Type", "application/x-www-form-urlencoded");
-    https.addHeader("token-client", token_client);
-    https.addHeader("token-iot", token_iot);
+    https.addHeader("token-client", _token_client);
+    https.addHeader("token-iot", _token_iot);
 
     String httpsRequestData = ("task_content= " + (String)task_content + "&task_state= " + (int)_task_state + "&task_time= " + (int)task_time);
     int httpsResponseCode = https.POST(httpsRequestData);
