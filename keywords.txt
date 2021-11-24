@@ -1,14 +1,18 @@
+//name of library
 glpi_esp8266		KEYWORD1
+
+//authorization
+Authorization       KEYWORD2
+
+//tickets
 Tickets			    KEYWORD2
 new_ticket		    KEYWORD2
 solution_ticket		KEYWORD2
 followup_ticket		KEYWORD2
 task_ticket		    KEYWORD2
+
+//problems
 Problems		    KEYWORD2
 new_problem		    KEYWORD2
 followup_problem	KEYWORD2
-task_ticket         KEYWORD2
-Problems            KEYWORD2
-new_problem         KEYWORD2
 solution_problem    KEYWORD2
-followup_problem    KEYWORD2
