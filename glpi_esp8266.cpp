@@ -261,7 +261,7 @@ void Problems::new_problem()
     https.end();
 };
 
-void Problems::solution_problem(char *solution_description, char *token_iot, char *token_client)
+void Problems::solution_problem(char *solution_description)
 
 {
     BearSSL::WiFiClientSecure client;
@@ -271,8 +271,8 @@ void Problems::solution_problem(char *solution_description, char *token_iot, cha
     https.begin(client, serverNameon);
 
     https.addHeader("Content-Type", "application/x-www-form-urlencoded");
-    https.addHeader("token-client", token_client);
-    https.addHeader("token-iot", token_iot);
+    https.addHeader("token-client", _token_client);
+    https.addHeader("token-iot", _token_iot);
 
     String httpsRequestData = ("solution_description= " + (String)solution_description);
     int httpsResponseCode = https.POST(httpsRequestData);
