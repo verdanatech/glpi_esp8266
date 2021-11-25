@@ -109,7 +109,7 @@ Using this method, you can add a task to the ticket.
 
  - **task_state:** here the task status is defined. We currently use 1 for a task that still needs to be done and 2 for a task that has already been done.
 
- - **task_time:** in this parameter, the time required to perform the task is passed.
+ - **task_time:** in this parameter, the time required to perform the task is passed in seconds.
 
 
 ### solution_ticket
