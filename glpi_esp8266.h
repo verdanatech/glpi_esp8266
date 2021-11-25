@@ -35,7 +35,7 @@
 #include <ESP8266HTTPClient.h>
 #include <ESP8266WiFi.h>
 
-class Tickets
+class tickets
 {
 
 private:
@@ -46,19 +46,14 @@ private:
   char *_ticket_description;
   long _event_id;
   char *_asset_name;
-  char *serverNameon;
-  char *httpsRequestData;
-  int httpsResponseCode;
-  char *_solution_description;
-  char *_followup_content;
-  char *_task_content;
-  int _task_state;
-  int _task_time;
   String _ticket_id;
-  String _url_base;
+  char *server_nameon;
+  char *https_request_data;
+  int https_response_code;
+  String url_base;
 
 public:
-  Tickets(char *ticket_name, int ticket_type, char *category_name, int ticket_priority, char *ticket_description, char *asset_name);
+  tickets(char *ticket_name, int ticket_type, char *category_name, int ticket_priority, char *ticket_description, char *asset_name);
   void new_ticket();
   void solution_ticket(char *solution_description);
   void followup_ticket(char *followup_content);
@@ -66,16 +61,16 @@ public:
 };
 
 // authorization
-class Authorization
+class authorization
 {
 public:
   char *token_iot = 0;
   char *token_client = 0;
 
-  Authorization(char *token_iot, char *token_client);
+  authorization(char *token_iot, char *token_client);
 };
 
-class Problems
+class problems
 {
 
 private:
@@ -85,18 +80,14 @@ private:
   char *_problem_description;
   int _event_id;
   char *_asset_name;
-  char *token_iot;
-  char *token_client;
-  char *serverNameon;
-  char *httpsRequestData;
-  int httpsResponseCode;
-  char *_followup_content;
-  char *_solution_description;
   String _problem_id;
-  String _url_base;
+  char *server_nameon;
+  char *https_request_data;
+  int https_response_code;
+  String url_base;
 
 public:
-  Problems(char *problem_name, char *category_name, int problem_priority, char *problem_description, char *asset_name);
+  problems(char *problem_name, char *category_name, int problem_priority, char *problem_description, char *asset_name);
   void new_problem();
   void solution_problem(char *solution_description);
   void followup_problem(char *followup_content);
