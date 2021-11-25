@@ -2,7 +2,7 @@
 
 glpi_esp8266 Consumes Verdanatech's vConnector API, thus allowing integration between IoT system with the GLPi management system.
 
-## LICENSE
+## License
 
 This file is part of glpi_esp8266.
 
@@ -50,6 +50,19 @@ The library only works on esp8266 boards.
 See the examples for more details on how the library is used.
 
 
+# Authorization
+
+
+## Constructor
+This is our constructor for authorization in the API, we will use the parameters below.
+
+
+### Parameters
+
+**token_iot:** token generated in the customer portal in the IOT configuration tab.
+
+**token_client:** customer token generated in the customer portal.
+
 
 # Tickets
 
@@ -78,13 +91,6 @@ Here is our constructor for tickets, in it we will create our object using the p
 This method opens a new ticket.
 
 
-### Parameters
-
-**token_iot:** token generated in the customer portal in the IOT configuration tab.
-
-**token_client:** customer token generated in the customer portal.
-
-
 ### followup_ticket
 Using this method, you can add a follow-up to the ticket.
 
@@ -92,11 +98,6 @@ Using this method, you can add a follow-up to the ticket.
 ### Parameters
 
 **followup_content:** Here is a description of the ticket follow-up.
-
-**token_iot:** token generated in the customer portal in the IOT configuration tab.
-
-**token_client:** customer token generated in the customer portal.
-
 
 ### task_ticket
 Using this method, you can add a task to the ticket.
@@ -110,11 +111,6 @@ Using this method, you can add a task to the ticket.
 
 **task_time:** in this parameter, the time required to perform the task is passed.
 
-**token_iot:** token generated in the customer portal in the IOT configuration tab.
-
-**token_client:** customer token generated in the customer portal.
-
-
 
 ### solution_ticket
 With this method it is possible to add a solution to a ticket.
@@ -123,11 +119,6 @@ With this method it is possible to add a solution to a ticket.
 ### Parameters
 
 **solution_description:** here a description of the ticket solution is made.
-
-**token_iot:** token generated in the customer portal in the IOT configuration tab.
-
-**token_client:** customer token generated in the customer portal.
-
 
 
 # Problems
@@ -154,13 +145,6 @@ Here is our constructor for problems, in it we will create our object using the 
 This method performs the opening of a problem.
 
 
-### Parameters
-
-**token_iot:** token generated in the customer portal in the IOT configuration tab.
-
-**token_client:** customer token generated in the customer portal.
-
-
 ### followup_problem
 By using this method, you can add follow-up to the issue.
 
@@ -168,10 +152,6 @@ By using this method, you can add follow-up to the issue.
 ### Parameters
 
 **followup_content:** Here is a description of the issue's follow-up.
-
-**token_iot:** token generated in the customer portal in the IOT configuration tab.
-
-**token_client:** customer token generated in the customer portal.
 
 
 ### solution_problem
@@ -182,6 +162,3 @@ With this method it is possible to add a solution to a problem.
 
 **solution_description:** here is a description of the solution to the problem.
 
-**token_iot:** token generated in the customer portal in the IOT configuration tab.
-
-**token_client:** customer token generated in the customer portal.
