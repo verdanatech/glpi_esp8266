@@ -1,25 +1,26 @@
 #include <glpi_esp8266.h>
 
-char SSID[] = "VTC";        //SSID da rede
-char NETKEY[] = "#v3rD@n4"; //Chave de acesso a rede
-char *token_iot = "870db0906c07b0b8dded3dc5f32fd7d5";
-char *token_client = "e1d96bf3ea0419f1a22a2947bd78feb9";
-char *asset_name = "PEVTCMTNB2590";
+char SSID[] = "your SSID";                //network SSID
+char NETKEY[] = "your password";          //network access key
+char *token_iot = "your token iot";       //token iot
+char *token_client = "your token client"; //token client
+char *asset_name = "asset name";          //device name
 
 int attempts = 50;
 
-Tickets caixaAgua("Caixa quase vazia", 1, "IoT", 5, "A caixa está com 10 litros de água", "PEVTCMTNB2590");
-Tickets tempMovimento("Presença detectada", 1, "IoT", 6, "Alguém está na sala", "PEVTCMTNB2590");
-Tickets temperaturaPlanta("Temperatura planta", 1, "IoT", 2, "A temperatura está muito alta", "PEVTCMTNB2590");
-Problems caixaAgua1("Cano quebrou", "IoT", 6, "O cano que enche a caixa quebrou e a caixa está vazia", "PEVTCMTNB2590");
+authorization tokens(token_iot, token_client); //creating the tokens object in the authorization class to perform API authentication
+
+tickets invasao("Cadeado danificado", 1, "IoT", 4, "O cadeado foi danificado", asset_name); //creating an object in class tickets
+
+problems invasion("Porta danificada", "IoT", 6, "A porta principal foi danificada", asset_name); //creating an object in class problems
 
 void printNetworkData()
 {
   /*
- * Imprime no monitor serial os dados de conexão da rede
+ * Prints the network connection data on the serial monitor
  */
-
-  Serial.println("- - - - - - - - - - - - - - - - - - - - - - - - ");
+  Serial.println();
+  Serial.println("- - - - - - - - - - - - - - - - - - - - - - - -");
   Serial.println("Hostname: " + (String)asset_name);
 
   Serial.println("Connected in: " + (String)SSID);
@@ -37,18 +38,17 @@ void wifiConect()
 {
 
   /*
- * Realiza a conexão da esp8266 com a rede wifi
+ * Connect the esp8266 to the wifi network
  */
 
-  delay(2000); //Um pequeno atraso para conseguir pegar os dados via Serial
+  delay(2000); //A slight delay to get the data via Serial
   Serial.println();
   Serial.print("Connecting to ");
   Serial.println(SSID);
 
   WiFi.begin(SSID, NETKEY);
 
-  // Definindo hostname da placa para LAN
-  WiFi.hostname(asset_name);
+  WiFi.hostname(asset_name); //Setting the hostname of the LAN adapter
 
   while (WiFi.status() != WL_CONNECTED)
   {
@@ -71,23 +71,31 @@ void setup(void)
 {
   // put your setup code here, to run once:
   Serial.begin(115200);
+
+  /*
+ *functions to connect to the wifi network and print the network connection data on the serial monitor
+ */
+
   wifiConect();
   printNetworkData();
   delay(4000);
-  caixaAgua.new_ticket(token_iot, token_client);
-  delay(2000);
-  caixaAgua1.new_problem(token_iot, token_client);
-  caixaAgua.task_ticket("Vamo no baldinho", 1, 4000, token_iot, token_client);
-  delay(2000);
-  tempMovimento.new_ticket(token_iot, token_client);
-  delay(2000);
-  caixaAgua.followup_ticket("Foi enviado a notificação para o síndico", token_iot, token_client);
-  delay(2000);
-  temperaturaPlanta.new_ticket(token_iot, token_client);
-  delay(120000);
-  caixaAgua.solution_ticket("A caixa foi enchida no baldinho, agora ela está cheia", token_iot, token_client);
-  delay(2000);
-  temperaturaPlanta.solution_ticket("A planta foi regada", token_iot, token_client);
+  invasao.new_ticket(); //opening a ticket
+  delay(3000);
+  invasao.task_ticket("Verificar o cadeado que foi danificado", 1, 0); //adding a task to the ticket
+  delay(3000);
+  invasao.followup_ticket("O segurança foi notificado e irá se dirigir até a localização do cadeado"); //adding a follow-up to the ticket
+  delay(3000);
+  invasao.task_ticket("Verificar o cadeado que foi danificado", 2, 300); //again adding a task to the ticket
+  delay(3000);
+  invasao.solution_ticket("O cadeado foi trocado"); //adding a solution to the ticket
+  delay(3000);
+  invasion.new_problem(); //opening a problem
+  delay(3000);
+  invasion.followup_problem("O vigilante foi notificado e deverá se digigir com urgência até o imóvel"); //adding a follow-up to the problem
+  delay(3000);
+  invasion.followup_problem("Foi verificado sinal de arrombamento"); //again adding a follow-up to the problem
+  delay(3000);
+  invasion.solution_problem("Marceneiro e chaveiro realizaram o conserto da porta"); //sending a solution to the problem
 }
 void loop()
 {
