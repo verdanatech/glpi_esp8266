@@ -38,13 +38,13 @@ long _event_id;
 char *_token_iot;
 char *_token_client;
 
-authorization::authorization(char *token_iot, char *token_client)
+Authorization::Authorization(char *token_iot, char *token_client)
 {
     _token_client = token_client;
     _token_iot = token_iot;
 };
 
-tickets::tickets(char *ticket_name, int ticket_type, char *category_name, int ticket_priority, char *ticket_description, char *asset_name)
+Tickets::Tickets(char *ticket_name, int ticket_type, char *category_name, int ticket_priority, char *ticket_description, char *asset_name)
 {
     _ticket_name = ticket_name;
     _ticket_type = ticket_type;
@@ -55,7 +55,7 @@ tickets::tickets(char *ticket_name, int ticket_type, char *category_name, int ti
     url_base = "https://vconnector2.verdanadesk.com/api/iot/";
 };
 
-String tickets::request(String url, String request_field)
+String Tickets::request(String url, String request_field)
 {
     BearSSL::WiFiClientSecure client;
     client.setInsecure();
@@ -75,7 +75,7 @@ String tickets::request(String url, String request_field)
     return result;
 };
 
-void tickets::new_ticket()
+void Tickets::new_ticket()
 {
     _event_id = random(2147483647);
     String url = (String)url_base + "tickets";
@@ -83,28 +83,28 @@ void tickets::new_ticket()
     _ticket_id = this->request(url, request_field);
 };
 
-void tickets::solution_ticket(char *solution_description)
+void Tickets::solution_ticket(char *solution_description)
 {
     String url = (String)url_base + "tickets/" + (String)_ticket_id + "/solutions";
     String request_field = ("solution_description= " + (String)solution_description);
     this->request(url, request_field);
 };
 
-void tickets::followup_ticket(char *followup_content)
+void Tickets::followup_ticket(char *followup_content)
 {
     String url = (String)url_base + "tickets/" + (String)_ticket_id + "/followup";
     String request_field = ("followup_content= " + (String)followup_content);
     this->request(url, request_field);
 };
 
-void tickets::task_ticket(char *task_content, int task_state, int task_time)
+void Tickets::task_ticket(char *task_content, int task_state, int task_time)
 {
     String url = (String)url_base + "tickets/" + (String)_ticket_id + "/tasks";
     String request_field = ("task_content= " + (String)task_content + "&task_state= " + (int)task_state + "&task_time= " + (int)task_time);
     this->request(url, request_field);
 };
 
-problems::problems(char *problem_name, char *category_name, int problem_priority, char *problem_description, char *asset_name)
+Problems::Problems(char *problem_name, char *category_name, int problem_priority, char *problem_description, char *asset_name)
 {
     _problem_name = problem_name;
     _category_name = category_name;
@@ -114,7 +114,7 @@ problems::problems(char *problem_name, char *category_name, int problem_priority
     url_base = "https://vconnector2.verdanadesk.com/api/iot/";
 };
 
-String problems::request(String url, String request_field)
+String Problems::request(String url, String request_field)
 {
     BearSSL::WiFiClientSecure client;
     client.setInsecure();
@@ -134,7 +134,7 @@ String problems::request(String url, String request_field)
     return result;
 };
 
-void problems::new_problem()
+void Problems::new_problem()
 {
     _event_id = random(2147483647);
     String url = (String)url_base + "problems";
@@ -142,14 +142,14 @@ void problems::new_problem()
     _problem_id = this->request(url, request_field);
 };
 
-void problems::solution_problem(char *solution_description)
+void Problems::solution_problem(char *solution_description)
 {
     String url = (String)url_base + "problems/" + (String)_problem_id + "/solutions";
     String request_field = ("solution_description= " + (String)solution_description);
     this->request(url, request_field);
 };
 
-void problems::followup_problem(char *followup_content)
+void Problems::followup_problem(char *followup_content)
 {
     String url = (String)url_base + "problems/" + (String)_problem_id + "/followup";
     String request_field = ("followup_content= " + (String)followup_content);

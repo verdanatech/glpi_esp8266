@@ -35,7 +35,7 @@
 #include <ESP8266HTTPClient.h>
 #include <ESP8266WiFi.h>
 
-class tickets
+class Tickets
 {
 
 private:
@@ -53,7 +53,7 @@ private:
   String url_base;
 
 public:
-  tickets(char *ticket_name, int ticket_type, char *category_name, int ticket_priority, char *ticket_description, char *asset_name);
+  Tickets(char *ticket_name, int ticket_type, char *category_name, int ticket_priority, char *ticket_description, char *asset_name);
   void new_ticket();
   void solution_ticket(char *solution_description);
   void followup_ticket(char *followup_content);
@@ -62,16 +62,16 @@ public:
 };
 
 // authorization
-class authorization
+class Authorization
 {
 public:
   char *token_iot = 0;
   char *token_client = 0;
 
-  authorization(char *token_iot, char *token_client);
+  Authorization(char *token_iot, char *token_client);
 };
 
-class problems
+class Problems
 {
 
 private:
@@ -88,7 +88,7 @@ private:
   String url_base;
 
 public:
-  problems(char *problem_name, char *category_name, int problem_priority, char *problem_description, char *asset_name);
+  Problems(char *problem_name, char *category_name, int problem_priority, char *problem_description, char *asset_name);
   void new_problem();
   void solution_problem(char *solution_description);
   void followup_problem(char *followup_content);
