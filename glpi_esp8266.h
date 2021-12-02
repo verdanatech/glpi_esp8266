@@ -58,6 +58,7 @@ public:
   void solution_ticket(char *solution_description);
   void followup_ticket(char *followup_content);
   void task_ticket(char *task_content, int task_state, int task_time);
+  String request(String url, String request_field);
 };
 
 // authorization
@@ -91,6 +92,7 @@ public:
   void new_problem();
   void solution_problem(char *solution_description);
   void followup_problem(char *followup_content);
+  String request(String url, String request_field);
 };
 
 #endif

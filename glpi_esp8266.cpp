@@ -55,160 +55,53 @@ tickets::tickets(char *ticket_name, int ticket_type, char *category_name, int ti
     url_base = "https://vconnector2.verdanadesk.com/api/iot/";
 };
 
-void tickets::new_ticket()
+String tickets::request(String url, String request_field)
 {
     BearSSL::WiFiClientSecure client;
     client.setInsecure();
-    _event_id = random(2147483647);
     HTTPClient https;
-    String server_nameon = (String)url_base + "tickets";
+    String server_nameon = url;
     https.begin(client, server_nameon);
 
     https.addHeader("Content-Type", "application/x-www-form-urlencoded");
     https.addHeader("token-client", _token_client);
     https.addHeader("token-iot", _token_iot);
 
-    String https_request_data = ("ticket_name= " + (String)_ticket_name + "&ticket_type= " + (int)_ticket_type + "&category_name= " + (String)_category_name + "&ticket_description= " + (String)_ticket_description + "&ticket_priority= " + (int)_ticket_priority + "&event_id= " + (int)_event_id + "&asset_name= " + (String)_asset_name);
+    String https_request_data = request_field;
     int https_response_code = https.POST(https_request_data);
-
-    if (https_response_code > 0)
-    {
-
-        String ticket_id = https.getString();
-
-        Serial.println("The code of sending POST is: " + (String)https_response_code);
-        _ticket_id = ticket_id;
-
-        if (https_response_code = 201)
-        {
-
-            Serial.println("The ID of ticket is: " + (String)ticket_id);
-        }
-    }
-    else
-    {
-
-        Serial.print("Error on sending POST: ");
-        Serial.println(https_response_code);
-    }
-
+    String result = https.getString();
     https.end();
+    Serial.println(result); //just to know if it worked
+    return result;
+};
+
+void tickets::new_ticket()
+{
+    _event_id = random(2147483647);
+    String url = (String)url_base + "tickets";
+    String request_field = ("ticket_name= " + (String)_ticket_name + "&ticket_type= " + (int)_ticket_type + "&category_name= " + (String)_category_name + "&ticket_description= " + (String)_ticket_description + "&ticket_priority= " + (int)_ticket_priority + "&event_id= " + (int)_event_id + "&asset_name= " + (String)_asset_name);
+    _ticket_id = this->request(url, request_field);
 };
 
 void tickets::solution_ticket(char *solution_description)
 {
-    BearSSL::WiFiClientSecure client;
-    client.setInsecure();
-    HTTPClient https;
-    String server_nameon = (String)url_base + "tickets/" + (String)_ticket_id + "/solutions";
-    https.begin(client, server_nameon);
-
-    https.addHeader("Content-Type", "application/x-www-form-urlencoded");
-    https.addHeader("token-client", _token_client);
-    https.addHeader("token-iot", _token_iot);
-
-    String https_request_data = ("solution_description= " + (String)solution_description);
-    int https_response_code = https.POST(https_request_data);
-
-    if (https_response_code > 0)
-    {
-
-        String request_data = https.getString();
-
-        Serial.println("The code of sending POST is: " + (String)https_response_code);
-
-        if (https_response_code = 201)
-        {
-
-            Serial.println("The ticket with ID " + (String)_ticket_id + " was solved");
-            Serial.println("The ID of solution the ticket is: " + (String)request_data);
-        }
-    }
-    else
-    {
-
-        Serial.print("Error on sending POST: ");
-        Serial.println(https_response_code);
-    }
-
-    https.end();
+    String url = (String)url_base + "tickets/" + (String)_ticket_id + "/solutions";
+    String request_field = ("solution_description= " + (String)solution_description);
+    this->request(url, request_field);
 };
 
 void tickets::followup_ticket(char *followup_content)
 {
-    BearSSL::WiFiClientSecure client;
-    client.setInsecure();
-    HTTPClient https;
-    String server_nameon = (String)url_base + "tickets/" + (String)_ticket_id + "/followup";
-    https.begin(client, server_nameon);
-
-    https.addHeader("Content-Type", "application/x-www-form-urlencoded");
-    https.addHeader("token-client", _token_client);
-    https.addHeader("token-iot", _token_iot);
-
-    String https_request_data = ("followup_content= " + (String)followup_content);
-    int https_response_code = https.POST(https_request_data);
-
-    if (https_response_code > 0)
-    {
-
-        String request_data = https.getString();
-
-        Serial.println("The code of sending POST is: " + (String)https_response_code);
-
-        if (https_response_code = 201)
-        {
-
-            Serial.println("a new follow-up has been added to the ticket id: " + (String)_ticket_id);
-        }
-    }
-    else
-    {
-
-        Serial.print("Error on sending POST: ");
-        Serial.println(https_response_code);
-    }
-
-    https.end();
+    String url = (String)url_base + "tickets/" + (String)_ticket_id + "/followup";
+    String request_field = ("followup_content= " + (String)followup_content);
+    this->request(url, request_field);
 };
 
 void tickets::task_ticket(char *task_content, int task_state, int task_time)
-
 {
-    BearSSL::WiFiClientSecure client;
-    client.setInsecure();
-    HTTPClient https;
-    String server_nameon = (String)url_base + "tickets/" + (String)_ticket_id + "/tasks";
-    https.begin(client, server_nameon);
-
-    https.addHeader("Content-Type", "application/x-www-form-urlencoded");
-    https.addHeader("token-client", _token_client);
-    https.addHeader("token-iot", _token_iot);
-
-    String https_request_data = ("task_content= " + (String)task_content + "&task_state= " + (int)task_state + "&task_time= " + (int)task_time);
-    int https_response_code = https.POST(https_request_data);
-
-    if (https_response_code > 0)
-    {
-
-        String request_data = https.getString();
-
-        Serial.println("The code of sending POST is: " + (String)https_response_code);
-
-        if (https_response_code = 201)
-        {
-
-            Serial.println("a new task has been added to the ticket id: " + (String)_ticket_id);
-        }
-    }
-    else
-    {
-
-        Serial.print("Error on sending POST: ");
-        Serial.println(https_response_code);
-    }
-
-    https.end();
+    String url = (String)url_base + "tickets/" + (String)_ticket_id + "/tasks";
+    String request_field = ("task_content= " + (String)task_content + "&task_state= " + (int)task_state + "&task_time= " + (int)task_time);
+    this->request(url, request_field);
 };
 
 problems::problems(char *problem_name, char *category_name, int problem_priority, char *problem_description, char *asset_name)
@@ -221,119 +114,44 @@ problems::problems(char *problem_name, char *category_name, int problem_priority
     url_base = "https://vconnector2.verdanadesk.com/api/iot/";
 };
 
-void problems::new_problem()
+String problems::request(String url, String request_field)
 {
     BearSSL::WiFiClientSecure client;
     client.setInsecure();
-    _event_id = random(2147483647);
     HTTPClient https;
-    String server_nameon = (String)url_base + "problems";
+    String server_nameon = url;
     https.begin(client, server_nameon);
 
     https.addHeader("Content-Type", "application/x-www-form-urlencoded");
     https.addHeader("token-client", _token_client);
     https.addHeader("token-iot", _token_iot);
 
-    String https_request_data = ("problem_name= " + (String)_problem_name + "&category_name= " + (String)_category_name + "&problem_description= " + (String)_problem_description + "&problem_priority= " + (int)_problem_priority + "&event_id= " + (int)_event_id + "&asset_name= " + (String)_asset_name);
+    String https_request_data = request_field;
     int https_response_code = https.POST(https_request_data);
-
-    if (https_response_code > 0)
-    {
-
-        String problem_id = https.getString();
-
-        Serial.println("The code of sending POST is: " + (String)https_response_code);
-        _problem_id = problem_id;
-
-        if (https_response_code = 201)
-        {
-
-            Serial.println("The ID of problem is: " + (String)problem_id);
-        }
-    }
-    else
-    {
-
-        Serial.print("Error on sending POST: ");
-        Serial.println(https_response_code);
-    }
-
+    String result = https.getString();
     https.end();
+    Serial.println(result); //just to know if it worked
+    return result;
+};
+
+void problems::new_problem()
+{
+    _event_id = random(2147483647);
+    String url = (String)url_base + "problems";
+    String request_field = ("problem_name= " + (String)_problem_name + "&category_name= " + (String)_category_name + "&problem_description= " + (String)_problem_description + "&problem_priority= " + (int)_problem_priority + "&event_id= " + (int)_event_id + "&asset_name= " + (String)_asset_name);
+    _problem_id = this->request(url, request_field);
 };
 
 void problems::solution_problem(char *solution_description)
-
 {
-    BearSSL::WiFiClientSecure client;
-    client.setInsecure();
-    HTTPClient https;
-    String server_nameon = (String)url_base + "problems/" + (String)_problem_id + "/solutions";
-    https.begin(client, server_nameon);
-
-    https.addHeader("Content-Type", "application/x-www-form-urlencoded");
-    https.addHeader("token-client", _token_client);
-    https.addHeader("token-iot", _token_iot);
-
-    String https_request_data = ("solution_description= " + (String)solution_description);
-    int https_response_code = https.POST(https_request_data);
-
-    if (https_response_code > 0)
-    {
-
-        String request_data = https.getString();
-        Serial.println("The code of sending POST is: " + (String)https_response_code);
-
-        if (https_response_code = 201)
-        {
-
-            Serial.println("The problem with ID " + (String)_problem_id + " was solved");
-            Serial.println("The ID of solution the problem is: " + (String)request_data);
-        }
-    }
-    else
-    {
-
-        Serial.print("Error on sending POST: ");
-        Serial.println(https_response_code);
-    }
-
-    https.end();
+    String url = (String)url_base + "problems/" + (String)_problem_id + "/solutions";
+    String request_field = ("solution_description= " + (String)solution_description);
+    this->request(url, request_field);
 };
 
 void problems::followup_problem(char *followup_content)
 {
-    BearSSL::WiFiClientSecure client;
-    client.setInsecure();
-    HTTPClient https;
-    String server_nameon = (String)url_base + "problems/" + (String)_problem_id + "/followup";
-    https.begin(client, server_nameon);
-
-    https.addHeader("Content-Type", "application/x-www-form-urlencoded");
-    https.addHeader("token-client", _token_client);
-    https.addHeader("token-iot", _token_iot);
-
-    String https_request_data = ("followup_content= " + (String)followup_content);
-    int https_response_code = https.POST(https_request_data);
-
-    if (https_response_code > 0)
-    {
-
-        String request_data = https.getString();
-
-        Serial.println("The code of sending POST is: " + (String)https_response_code);
-
-        if (https_response_code = 201)
-        {
-
-            Serial.println("a new follow-up has been added to the problem id: " + (String)_problem_id);
-        }
-    }
-    else
-    {
-
-        Serial.print("Error on sending POST: ");
-        Serial.println(https_response_code);
-    }
-
-    https.end();
+    String url = (String)url_base + "problems/" + (String)_problem_id + "/followup";
+    String request_field = ("followup_content= " + (String)followup_content);
+    this->request(url, request_field);
 };
