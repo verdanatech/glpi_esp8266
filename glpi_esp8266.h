@@ -51,6 +51,7 @@ private:
   char *httpsRequestData;
   int httpsResponseCode;
   String urlBase;
+  String Request(String url, String requestField);
 
 public:
   Tickets(char *ticketName, int ticketType, char *categoryName, int ticketPriority, char *ticketDescription, char *assetName);
@@ -58,7 +59,6 @@ public:
   void SolutionTicket(char *solutionDescription);
   void FollowupTicket(char *followupContent);
   void TaskTicket(char *taskContent, int taskState, int taskTime);
-  String Request(String url, String requestField);
 };
 
 // authorization
@@ -86,6 +86,7 @@ private:
   char *httpsRequestData;
   int httpsResponseCode;
   String urlBase;
+  String Request(String url, String requestField);
 
 public:
   Problems(char *problemName, char *categoryName, int problemPriority, char *problemDescription, char *assetName);
@@ -93,7 +94,6 @@ public:
   void SolutionProblem(char *solutionDescription);
   void FollowupProblem(char *followupContent);
   void TaskProblem(char *taskContent, int taskState, int taskTime);
-  String Request(String url, String requestField);
 };
 
 #endif
