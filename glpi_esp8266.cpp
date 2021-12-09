@@ -55,7 +55,7 @@ Tickets::Tickets(char *ticket_name, int ticket_type, char *category_name, int ti
     url_base = "https://vconnector2.verdanadesk.com/api/iot/";
 };
 
-String Tickets::request(String url, String request_field)
+String Tickets::Request(String url, String request_field)
 {
     BearSSL::WiFiClientSecure client;
     client.setInsecure();
@@ -75,7 +75,7 @@ String Tickets::request(String url, String request_field)
     return result;
 };
 
-void Tickets::new_ticket()
+void Tickets::NewTicket()
 {
     _event_id = random(2147483647);
     String url = (String)url_base + "tickets";
@@ -83,21 +83,21 @@ void Tickets::new_ticket()
     _ticket_id = this->request(url, request_field);
 };
 
-void Tickets::solution_ticket(char *solution_description)
+void Tickets::SolutionTicket(char *solution_description)
 {
     String url = (String)url_base + "tickets/" + (String)_ticket_id + "/solutions";
     String request_field = ("solution_description= " + (String)solution_description);
     this->request(url, request_field);
 };
 
-void Tickets::followup_ticket(char *followup_content)
+void Tickets::FollowupTicket(char *followup_content)
 {
     String url = (String)url_base + "tickets/" + (String)_ticket_id + "/followup";
     String request_field = ("followup_content= " + (String)followup_content);
     this->request(url, request_field);
 };
 
-void Tickets::task_ticket(char *task_content, int task_state, int task_time)
+void Tickets::TaskTicket(char *task_content, int task_state, int task_time)
 {
     String url = (String)url_base + "tickets/" + (String)_ticket_id + "/tasks";
     String request_field = ("task_content= " + (String)task_content + "&task_state= " + (int)task_state + "&task_time= " + (int)task_time);
@@ -114,7 +114,7 @@ Problems::Problems(char *problem_name, char *category_name, int problem_priority
     url_base = "https://vconnector2.verdanadesk.com/api/iot/";
 };
 
-String Problems::request(String url, String request_field)
+String Problems::Request(String url, String request_field)
 {
     BearSSL::WiFiClientSecure client;
     client.setInsecure();
@@ -134,7 +134,7 @@ String Problems::request(String url, String request_field)
     return result;
 };
 
-void Problems::new_problem()
+void Problems::NewProblem()
 {
     _event_id = random(2147483647);
     String url = (String)url_base + "problems";
@@ -142,14 +142,14 @@ void Problems::new_problem()
     _problem_id = this->request(url, request_field);
 };
 
-void Problems::solution_problem(char *solution_description)
+void Problems::SolutionProblem(char *solution_description)
 {
     String url = (String)url_base + "problems/" + (String)_problem_id + "/solutions";
     String request_field = ("solution_description= " + (String)solution_description);
     this->request(url, request_field);
 };
 
-void Problems::followup_problem(char *followup_content)
+void Problems::FollowupProblem(char *followup_content)
 {
     String url = (String)url_base + "problems/" + (String)_problem_id + "/followup";
     String request_field = ("followup_content= " + (String)followup_content);

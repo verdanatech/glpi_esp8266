@@ -54,11 +54,11 @@ private:
 
 public:
   Tickets(char *ticket_name, int ticket_type, char *category_name, int ticket_priority, char *ticket_description, char *asset_name);
-  void new_ticket();
-  void solution_ticket(char *solution_description);
-  void followup_ticket(char *followup_content);
-  void task_ticket(char *task_content, int task_state, int task_time);
-  String request(String url, String request_field);
+  void NewTicket();
+  void SolutionTicket(char *solution_description);
+  void FollowupTicket(char *followup_content);
+  void TaskTicket(char *task_content, int task_state, int task_time);
+  String Request(String url, String request_field);
 };
 
 // authorization
@@ -89,10 +89,10 @@ private:
 
 public:
   Problems(char *problem_name, char *category_name, int problem_priority, char *problem_description, char *asset_name);
-  void new_problem();
-  void solution_problem(char *solution_description);
-  void followup_problem(char *followup_content);
-  String request(String url, String request_field);
+  void NewProblem();
+  void SolutionProblem(char *solution_description);
+  void FollowupProblem(char *followup_content);
+  String Request(String url, String request_field);
 };
 
 #endif
