@@ -92,6 +92,7 @@ public:
   void NewProblem();
   void SolutionProblem(char *solutionDescription);
   void FollowupProblem(char *followupContent);
+  void TaskProblem(char *taskContent, int taskState, int taskTime);
   String Request(String url, String requestField);
 };
 

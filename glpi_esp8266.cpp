@@ -155,3 +155,10 @@ void Problems::FollowupProblem(char *followupContent)
     String requestField = ("followup_content= " + (String)followupContent);
     this->Request(url, requestField);
 };
+
+void Problems::TaskProblem(char *taskContent, int taskState, int taskTime)
+{
+    String url = (String)urlBase + "problems/" + (String)_problemId + "/tasks";
+    String requestField = ("task_content= " + (String)taskContent + "&task_state= " + (int)taskState + "&task_time= " + (int)taskTime);
+    this->Request(url, requestField);
+};
