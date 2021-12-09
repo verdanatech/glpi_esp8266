@@ -1,18 +1,18 @@
 #include <glpi_esp8266.h>
 
-char SSID[] = "your SSID";                //network SSID
-char NETKEY[] = "your password";          //network access key
-char *token_iot = "your token iot";       //token iot
-char *token_client = "your token client"; //token client
-char *asset_name = "asset name";          //device name
+char SSID[] = "your SSID";               //network SSID
+char NETKEY[] = "your password";         //network access key
+char *tokenIot = "your token iot";       //token iot
+char *tokenClient = "your token client"; //token client
+char *assetName = "asset name";          //device name
 
 int attempts = 50;
 
-authorization tokens(token_iot, token_client); //creating the tokens object in the authorization class to perform API authentication
+Authorization tokens(tokenIot, tokenClient); //creating the tokens object in the authorization class to perform API authentication
 
-tickets invasao("Cadeado danificado", 1, "IoT", 4, "O cadeado foi danificado", asset_name); //creating an object in class tickets
+Tickets invasion("Damaged padlock", 1, "IoT", 4, "The padlock has been damaged", assetName); //creating an object in class tickets
 
-problems invasion("Porta danificada", "IoT", 6, "A porta principal foi danificada", asset_name); //creating an object in class problems
+Problems housebreaking("Damaged door", "IoT", 6, "The main door has been damaged", assetName); //creating an object in class problems
 
 void printNetworkData()
 {
@@ -21,7 +21,7 @@ void printNetworkData()
  */
   Serial.println();
   Serial.println("- - - - - - - - - - - - - - - - - - - - - - - -");
-  Serial.println("Hostname: " + (String)asset_name);
+  Serial.println("Hostname: " + (String)assetName);
 
   Serial.println("Connected in: " + (String)SSID);
 
@@ -48,7 +48,7 @@ void wifiConect()
 
   WiFi.begin(SSID, NETKEY);
 
-  WiFi.hostname(asset_name); //Setting the hostname of the LAN adapter
+  WiFi.hostname(assetName); //Setting the hostname of the LAN adapter
 
   while (WiFi.status() != WL_CONNECTED)
   {
@@ -79,23 +79,23 @@ void setup(void)
   wifiConect();
   printNetworkData();
   delay(4000);
-  invasao.new_ticket(); //opening a ticket
+  invasion.NewTicket(); //opening a ticket
   delay(3000);
-  invasao.task_ticket("Verificar o cadeado que foi danificado", 1, 0); //adding a task to the ticket
+  invasion.TaskTicket("Check the padlock that was damaged", 1, 0); //adding a task to the ticket
   delay(3000);
-  invasao.followup_ticket("O segurança foi notificado e irá se dirigir até a localização do cadeado"); //adding a follow-up to the ticket
+  invasion.FollowupTicket("Security has been notified and will proceed to the location of the lock"); //adding a follow-up to the ticket
   delay(3000);
-  invasao.task_ticket("Verificar o cadeado que foi danificado", 2, 300); //again adding a task to the ticket
+  invasion.TaskTicket("Check the padlock that was damaged", 2, 300); //again adding a task to the ticket
   delay(3000);
-  invasao.solution_ticket("O cadeado foi trocado"); //adding a solution to the ticket
+  invasion.SolutionTicket("The padlock has been changed"); //adding a solution to the ticket
   delay(3000);
-  invasion.new_problem(); //opening a problem
+  housebreaking.NewProblem(); //opening a problem
   delay(3000);
-  invasion.followup_problem("O vigilante foi notificado e deverá se digigir com urgência até o imóvel"); //adding a follow-up to the problem
+  housebreaking.FollowupProblem("The security has been notified and must go to the property urgently"); //adding a follow-up to the problem
   delay(3000);
-  invasion.followup_problem("Foi verificado sinal de arrombamento"); //again adding a follow-up to the problem
+  housebreaking.FollowupProblem("Sign of burglary was verified"); //again adding a follow-up to the problem
   delay(3000);
-  invasion.solution_problem("Marceneiro e chaveiro realizaram o conserto da porta"); //sending a solution to the problem
+  housebreaking.SolutionProblem("Joiner and locksmith carried out the repair of the door"); //sending a solution to the problem
 }
 void loop()
 {
