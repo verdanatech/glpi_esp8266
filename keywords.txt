@@ -2,17 +2,17 @@
 glpi_esp8266		KEYWORD1
 
 //authorization
-authorization       KEYWORD2
+Authorization       KEYWORD2
 
 //tickets
-tickets			    KEYWORD2
-new_ticket		    KEYWORD2
-solution_ticket		KEYWORD2
-followup_ticket		KEYWORD2
-task_ticket		    KEYWORD2
+Tickets			    KEYWORD2
+NewTicket		    KEYWORD2
+SolutionTicket		KEYWORD2
+FollowupTicket		KEYWORD2
+TaskTicket		    KEYWORD2
 
 //problems
-problems		    KEYWORD2
-new_problem		    KEYWORD2
-followup_problem	KEYWORD2
-solution_problem    KEYWORD2
+Problems		    KEYWORD2
+NewProblem		    KEYWORD2
+FollowupProblem	    KEYWORD2
+SolutionProblem     KEYWORD2
