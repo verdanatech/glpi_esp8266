@@ -39,60 +39,60 @@ class Tickets
 {
 
 private:
-  char *_ticket_name;
-  int _ticket_type;
-  char *_category_name;
-  int _ticket_priority;
-  char *_ticket_description;
-  long _event_id;
-  char *_asset_name;
-  String _ticket_id;
-  char *server_nameon;
-  char *https_request_data;
-  int https_response_code;
-  String url_base;
+  char *_ticketName;
+  int _ticketType;
+  char *_categoryName;
+  int _ticketPriority;
+  char *_ticketDescription;
+  long _eventId;
+  char *_assetName;
+  String _ticketId;
+  char *serverNameon;
+  char *httpsRequestData;
+  int httpsResponseCode;
+  String urlBase;
 
 public:
-  Tickets(char *ticket_name, int ticket_type, char *category_name, int ticket_priority, char *ticket_description, char *asset_name);
+  Tickets(char *ticketName, int ticketType, char *categoryName, int ticketPriority, char *ticketDescription, char *assetName);
   void NewTicket();
-  void SolutionTicket(char *solution_description);
-  void FollowupTicket(char *followup_content);
-  void TaskTicket(char *task_content, int task_state, int task_time);
-  String Request(String url, String request_field);
+  void SolutionTicket(char *solutionDescription);
+  void FollowupTicket(char *followupContent);
+  void TaskTicket(char *taskContent, int taskState, int taskTime);
+  String Request(String url, String requestField);
 };
 
 // authorization
 class Authorization
 {
 public:
-  char *token_iot = 0;
-  char *token_client = 0;
+  char *_tokenIot = 0;
+  char *_tokenClient = 0;
 
-  Authorization(char *token_iot, char *token_client);
+  Authorization(char *tokenIot, char *tokenClient);
 };
 
 class Problems
 {
 
 private:
-  char *_problem_name;
-  char *_category_name;
-  int _problem_priority;
-  char *_problem_description;
-  int _event_id;
-  char *_asset_name;
-  String _problem_id;
-  char *server_nameon;
-  char *https_request_data;
-  int https_response_code;
-  String url_base;
+  char *_problemName;
+  char *_categoryName;
+  int _problemPriority;
+  char *_problemDescription;
+  int _eventId;
+  char *_assetName;
+  String _problemId;
+  char *serverNameon;
+  char *httpsRequestData;
+  int httpsResponseCode;
+  String urlBase;
 
 public:
-  Problems(char *problem_name, char *category_name, int problem_priority, char *problem_description, char *asset_name);
+  Problems(char *problemName, char *categoryName, int problemPriority, char *problemDescription, char *assetName);
   void NewProblem();
-  void SolutionProblem(char *solution_description);
-  void FollowupProblem(char *followup_content);
-  String Request(String url, String request_field);
+  void SolutionProblem(char *solutionDescription);
+  void FollowupProblem(char *followupContent);
+  String Request(String url, String requestField);
 };
 
 #endif

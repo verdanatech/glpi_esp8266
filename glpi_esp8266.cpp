@@ -32,43 +32,43 @@
 #include <ESP8266HTTPClient.h>
 #include <ESP8266WiFi.h>
 
-String _ticket_id;
-String _problem_id;
-long _event_id;
-char *_token_iot;
-char *_token_client;
+String _ticketId;
+String _problemId;
+long _eventId;
+char *_tokenIot;
+char *_tokenClient;
 
-Authorization::Authorization(char *token_iot, char *token_client)
+Authorization::Authorization(char *tokenIot, char *tokenClient)
 {
-    _token_client = token_client;
-    _token_iot = token_iot;
+    _tokenClient = tokenClient;
+    _tokenIot = tokenIot;
 };
 
-Tickets::Tickets(char *ticket_name, int ticket_type, char *category_name, int ticket_priority, char *ticket_description, char *asset_name)
+Tickets::Tickets(char *ticketName, int ticketType, char *categoryName, int ticketPriority, char *ticketDescription, char *assetName)
 {
-    _ticket_name = ticket_name;
-    _ticket_type = ticket_type;
-    _category_name = category_name;
-    _ticket_priority = ticket_priority;
-    _ticket_description = ticket_description;
-    _asset_name = asset_name;
-    url_base = "https://vconnector2.verdanadesk.com/api/iot/";
+    _ticketName = ticketName;
+    _ticketType = ticketType;
+    _categoryName = categoryName;
+    _ticketPriority = ticketPriority;
+    _ticketDescription = ticketDescription;
+    _assetName = assetName;
+    urlBase = "https://vconnector2.verdanadesk.com/api/iot/";
 };
 
-String Tickets::Request(String url, String request_field)
+String Tickets::Request(String url, String requestField)
 {
     BearSSL::WiFiClientSecure client;
     client.setInsecure();
     HTTPClient https;
-    String server_nameon = url;
-    https.begin(client, server_nameon);
+    String serverNameon = url;
+    https.begin(client, serverNameon);
 
     https.addHeader("Content-Type", "application/x-www-form-urlencoded");
-    https.addHeader("token-client", _token_client);
-    https.addHeader("token-iot", _token_iot);
+    https.addHeader("token-client", _tokenClient);
+    https.addHeader("token-iot", _tokenIot);
 
-    String https_request_data = request_field;
-    int https_response_code = https.POST(https_request_data);
+    String httpsRequestData = requestField;
+    int httpsResponseCode = https.POST(httpsRequestData);
     String result = https.getString();
     https.end();
     Serial.println(result); //just to know if it worked
@@ -77,57 +77,57 @@ String Tickets::Request(String url, String request_field)
 
 void Tickets::NewTicket()
 {
-    _event_id = random(2147483647);
-    String url = (String)url_base + "tickets";
-    String request_field = ("ticket_name= " + (String)_ticket_name + "&ticket_type= " + (int)_ticket_type + "&category_name= " + (String)_category_name + "&ticket_description= " + (String)_ticket_description + "&ticket_priority= " + (int)_ticket_priority + "&event_id= " + (int)_event_id + "&asset_name= " + (String)_asset_name);
-    _ticket_id = this->request(url, request_field);
+    _eventId = random(2147483647);
+    String url = (String)urlBase + "tickets";
+    String requestField = ("ticket_name= " + (String)_ticketName + "&ticket_type= " + (int)_ticketType + "&category_name= " + (String)_categoryName + "&ticket_description= " + (String)_ticketDescription + "&ticket_priority= " + (int)_ticketPriority + "&event_id= " + (int)_eventId + "&asset_name= " + (String)_assetName);
+    _ticketId = this->Request(url, requestField);
 };
 
-void Tickets::SolutionTicket(char *solution_description)
+void Tickets::SolutionTicket(char *solutionDescription)
 {
-    String url = (String)url_base + "tickets/" + (String)_ticket_id + "/solutions";
-    String request_field = ("solution_description= " + (String)solution_description);
-    this->request(url, request_field);
+    String url = (String)urlBase + "tickets/" + (String)_ticketId + "/solutions";
+    String requestField = ("solution_description= " + (String)solutionDescription);
+    this->Request(url, requestField);
 };
 
-void Tickets::FollowupTicket(char *followup_content)
+void Tickets::FollowupTicket(char *followupContent)
 {
-    String url = (String)url_base + "tickets/" + (String)_ticket_id + "/followup";
-    String request_field = ("followup_content= " + (String)followup_content);
-    this->request(url, request_field);
+    String url = (String)urlBase + "tickets/" + (String)_ticketId + "/followup";
+    String requestField = ("followup_content= " + (String)followupContent);
+    this->Request(url, requestField);
 };
 
-void Tickets::TaskTicket(char *task_content, int task_state, int task_time)
+void Tickets::TaskTicket(char *taskContent, int taskState, int taskTime)
 {
-    String url = (String)url_base + "tickets/" + (String)_ticket_id + "/tasks";
-    String request_field = ("task_content= " + (String)task_content + "&task_state= " + (int)task_state + "&task_time= " + (int)task_time);
-    this->request(url, request_field);
+    String url = (String)urlBase + "tickets/" + (String)_ticketId + "/tasks";
+    String requestField = ("task_content= " + (String)taskContent + "&task_state= " + (int)taskState + "&task_time= " + (int)taskTime);
+    this->Request(url, requestField);
 };
 
-Problems::Problems(char *problem_name, char *category_name, int problem_priority, char *problem_description, char *asset_name)
+Problems::Problems(char *problemName, char *categoryName, int problemPriority, char *problemDescription, char *assetName)
 {
-    _problem_name = problem_name;
-    _category_name = category_name;
-    _problem_priority = problem_priority;
-    _problem_description = problem_description;
-    _asset_name = asset_name;
-    url_base = "https://vconnector2.verdanadesk.com/api/iot/";
+    _problemName = problemName;
+    _categoryName = categoryName;
+    _problemPriority = problemPriority;
+    _problemDescription = problemDescription;
+    _assetName = assetName;
+    urlBase = "https://vconnector2.verdanadesk.com/api/iot/";
 };
 
-String Problems::Request(String url, String request_field)
+String Problems::Request(String url, String requestField)
 {
     BearSSL::WiFiClientSecure client;
     client.setInsecure();
     HTTPClient https;
-    String server_nameon = url;
-    https.begin(client, server_nameon);
+    String serverNameon = url;
+    https.begin(client, serverNameon);
 
     https.addHeader("Content-Type", "application/x-www-form-urlencoded");
-    https.addHeader("token-client", _token_client);
-    https.addHeader("token-iot", _token_iot);
+    https.addHeader("token-client", _tokenClient);
+    https.addHeader("token-iot", _tokenIot);
 
-    String https_request_data = request_field;
-    int https_response_code = https.POST(https_request_data);
+    String httpsRequestData = requestField;
+    int httpsResponseCode = https.POST(httpsRequestData);
     String result = https.getString();
     https.end();
     Serial.println(result); //just to know if it worked
@@ -136,22 +136,22 @@ String Problems::Request(String url, String request_field)
 
 void Problems::NewProblem()
 {
-    _event_id = random(2147483647);
-    String url = (String)url_base + "problems";
-    String request_field = ("problem_name= " + (String)_problem_name + "&category_name= " + (String)_category_name + "&problem_description= " + (String)_problem_description + "&problem_priority= " + (int)_problem_priority + "&event_id= " + (int)_event_id + "&asset_name= " + (String)_asset_name);
-    _problem_id = this->request(url, request_field);
+    _eventId = random(2147483647);
+    String url = (String)urlBase + "problems";
+    String requestField = ("problem_name= " + (String)_problemName + "&category_name= " + (String)_categoryName + "&problem_description= " + (String)_problemDescription + "&problem_priority= " + (int)_problemPriority + "&event_id= " + (int)_eventId + "&asset_name= " + (String)_assetName);
+    _problemId = this->Request(url, requestField);
 };
 
-void Problems::SolutionProblem(char *solution_description)
+void Problems::SolutionProblem(char *solutionDescription)
 {
-    String url = (String)url_base + "problems/" + (String)_problem_id + "/solutions";
-    String request_field = ("solution_description= " + (String)solution_description);
-    this->request(url, request_field);
+    String url = (String)urlBase + "problems/" + (String)_problemId + "/solutions";
+    String requestField = ("solution_description= " + (String)solutionDescription);
+    this->Request(url, requestField);
 };
 
-void Problems::FollowupProblem(char *followup_content)
+void Problems::FollowupProblem(char *followupContent)
 {
-    String url = (String)url_base + "problems/" + (String)_problem_id + "/followup";
-    String request_field = ("followup_content= " + (String)followup_content);
-    this->request(url, request_field);
+    String url = (String)urlBase + "problems/" + (String)_problemId + "/followup";
+    String requestField = ("followup_content= " + (String)followupContent);
+    this->Request(url, requestField);
 };
