@@ -65,8 +65,8 @@ public:
 class Authorization
 {
 public:
-  char *_tokenIot = 0;
-  char *_tokenClient = 0;
+  char *tokenIot = 0;
+  char *tokenClient = 0;
 
   Authorization(char *tokenIot, char *tokenClient);
 };
