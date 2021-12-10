@@ -91,6 +91,8 @@ void setup(void)
   delay(3000);
   housebreaking.NewProblem(); //opening a problem
   delay(3000);
+  housebreaking.TaskProblem("Check the door", 1, 0);
+  delay(3000);
   housebreaking.FollowupProblem("The security has been notified and must go to the property urgently"); //adding a follow-up to the problem
   delay(3000);
   housebreaking.FollowupProblem("Sign of burglary was verified"); //again adding a follow-up to the problem
