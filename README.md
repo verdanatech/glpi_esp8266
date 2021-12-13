@@ -59,9 +59,9 @@ This is our constructor for authorization in the API, we will use the parameters
 
 ### Parameters
 
- - **token_iot:** token generated in the customer portal in the IOT configuration tab.
+ - **tokenIot:** token generated in the customer portal in the IOT configuration tab.
 
- - **token_client:** customer token generated in the customer portal.
+ - **tokenClient:** customer token generated in the customer portal.
 
 
 # Tickets
@@ -72,53 +72,53 @@ Here is our constructor for tickets, in it we will create our object using the p
 
 ### Parameters
 
- - **ticket_name:** is the name that will be given to the ticket.
+ - **ticketName:** is the name that will be given to the ticket.
 
- - **ticket_type:** here we define the ticket type. We currently use two types: type 1 is incident, type 2 is requisition.
+ - **ticketType:** here we define the ticket type. We currently use two types: type 1 is incident, type 2 is requisition.
 
- - **category_name:** here is defined the category of the ticket. NOTE: the category must be existing in the GLPi system.
+ - **categoryName:** here is defined the category of the ticket. NOTE: the category must be existing in the GLPi system.
 
- - **ticket_priority:** here the priority of the ticket is defined. We use values from 1 to 6, with 1 being a very low priority level and 6 being a critical priority level.
+ - **ticketPriority:** here the priority of the ticket is defined. We use values from 1 to 6, with 1 being a very low priority level and 6 being a critical priority level.
 
- - **ticket_description:** here is a brief summary of the ticket.
+ - **ticketDescription:** here is a brief summary of the ticket.
 
- - **asset_name:** in this parameter, the name of the asset (device name) from which the request is being made is passed.
+ - **assetName:** in this parameter, the name of the asset (device name) from which the request is being made is passed.
 
 
 ## Methods
 
-### new_ticket
+### NewTicket
 This method opens a new ticket.
 
 
-### followup_ticket
+### FollowupTicket
 Using this method, you can add a follow-up to the ticket.
 
 
 ### Parameters
 
- - **followup_content:** Here is a description of the ticket follow-up.
+ - **followupContent:** Here is a description of the ticket follow-up.
 
-### task_ticket
+### TaskTicket
 Using this method, you can add a task to the ticket.
 
 
 ### Parameters
 
- - **task_content:** here a description of the task is made.
+ - **taskContent:** here a description of the task is made.
 
- - **task_state:** here the task status is defined. We currently use 1 for a task that still needs to be done and 2 for a task that has already been done.
+ - **taskState:** here the task status is defined. We currently use 1 for a task that still needs to be done and 2 for a task that has already been done.
 
- - **task_time:** in this parameter, the time required to perform the task is passed in seconds.
+ - **taskTime:** in this parameter, the time required to perform the task is passed in seconds.
 
 
-### solution_ticket
+### SolutionTicket
 With this method it is possible to add a solution to a ticket.
 
 
 ### Parameters
 
- - **solution_description:** here a description of the ticket solution is made.
+ - **solutionDescription:** here a description of the ticket solution is made.
 
 
 # Problems
@@ -128,37 +128,49 @@ Here is our constructor for problems, in it we will create our object using the 
 
 ### Parameters
 
- - **problem_name:** is the name that will be given to the problem.
+ - **problemName:** is the name that will be given to the problem.
 
- - **category_name:** here is defined the category of the problem. NOTE: the category must be existing in the GLPi system.
+ - **categoryName:** here is defined the category of the problem. NOTE: the category must be existing in the GLPi system.
 
- - **problem_priority:** here the priority of the problem is defined. We use values from 1 to 6, with 1 being a very low priority level and 6 being a critical priority level.
+ - **problemPriority:** here the priority of the problem is defined. We use values from 1 to 6, with 1 being a very low priority level and 6 being a critical priority level.
 
- - **problem_description:** here is a brief summary of the problem.
+ - **problemDescription:** here is a brief summary of the problem.
 
- - **asset_name:** in this parameter, the name of the asset (device name) from which the request is being made is passed.
+ - **assetName:** in this parameter, the name of the asset (device name) from which the request is being made is passed.
 
 
 ## Methods
 
-### new_problem
+### NewProblem
 This method performs the opening of a problem.
 
 
-### followup_problem
+### FollowupProblem
 By using this method, you can add follow-up to the issue.
 
 
 ### Parameters
 
- - **followup_content:** Here is a description of the issue's follow-up.
+ - **followupContent:** Here is a description of the issue's follow-up.
 
 
-### solution_problem
+### SolutionProblem
 With this method it is possible to add a solution to a problem.
 
 
 ### Parameters
 
- - **solution_description:** here is a description of the solution to the problem.
+ - **solutionDescription:** here is a description of the solution to the problem.
+
+ ### TaskProblem
+Using this method, you can add a task to the problem.
+
+
+### Parameters
+
+ - **taskContent:** here a description of the task is made.
+
+ - **taskState:** here the task status is defined. We currently use 1 for a task that still needs to be done and 2 for a task that has already been done.
+
+ - **taskTime:** in this parameter, the time required to perform the task is passed in seconds.
 
