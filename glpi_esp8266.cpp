@@ -63,9 +63,9 @@ void GlpiIot::DebugConsole(int httpsResponseCode, String serverNameon, String re
         if (httpsResponseCode == 201)
             Serial.print("Sucess - Code: " + (String)httpsResponseCode);
     }
-    //Serial.println(httpsResponseCode);
-    Serial.print(" Url: " + (String)serverNameon);
-    Serial.println(" Result: " + (String)result);
+
+    Serial.print(" and Url: " + (String)serverNameon);
+    Serial.println(" and ID of result: " + (String)result);
 };
 
 String GlpiIot::Request(String url, String requestField)
@@ -133,42 +133,6 @@ String GlpiIot::FilesTicket(String ticketId, char *fileName, char *fileContent)
     return this->Request(url, requestField);
 };
 
-/*Problems::Problems(char *problemName, char *categoryName, int problemPriority, char *problemDescription, char *assetName)
-{
-    _problemName = problemName;
-    _categoryName = categoryName;
-    _problemPriority = problemPriority;
-    _problemDescription = problemDescription;
-    _assetName = assetName;
-    urlBase = "https://vconnector2.verdanadesk.com/api/iot/";
-};
-
-String Problems::Request(String url, String requestField)
-{
-    BearSSL::WiFiClientSecure client;
-    client.setInsecure();
-    HTTPClient https;
-    String serverNameon = url;
-    https.begin(client, serverNameon);
-
-    https.addHeader("Content-Type", "application/x-www-form-urlencoded");
-    https.addHeader("token-client", _tokenClient);
-    https.addHeader("token-iot", _tokenIot);
-
-    String httpsRequestData = requestField;
-    int httpsResponseCode = https.POST(httpsRequestData);
-    String result = https.getString();
-    https.end();
-
-    if (_debug == false)
-    {
-        Serial.println(result);
-    }
-
-    return result;
-};
-*/
-
 String GlpiIot::NewProblem(char *problemName, char *categoryName, int problemPriority, char *problemDescription, char *assetName)
 {
     eventId = random(2147483647);
@@ -195,5 +159,12 @@ String GlpiIot::TaskProblem(String problemId, char *taskContent, int taskState, 
 {
     String url = (String)urlBase + "problems/" + (String)problemId + "/tasks";
     String requestField = ("task_content= " + (String)taskContent + "&task_state= " + (int)taskState + "&task_time= " + (int)taskTime);
+    return this->Request(url, requestField);
+};
+
+String GlpiIot::FilesProblem(String problemId, char *fileName, char *fileContent)
+{
+    String url = (String)urlBase + "problems/" + (String)problemId + "/files";
+    String requestField = ("document_content= " + (String)fileName + "&url_document= " + (String)fileContent);
     return this->Request(url, requestField);
 };

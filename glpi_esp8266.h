@@ -39,13 +39,9 @@ class GlpiIot
 {
 
 private:
-  //tickets
-  String _ticketId;
-
-  //problems
+    String _ticketId;
   String _problemId;
 
-  //geral
   long _eventId;
   char *_assetName;
   char *serverNameon;
@@ -57,7 +53,6 @@ private:
 public:
   GlpiIot(char *tokenIot, char *tokenClient);
 
-  //tickets
   String NewTicketIncident(char *ticketName, char *categoryName, int ticketPriority, char *ticketDescription, char *assetName);
   String NewTicketRequest(char *ticketName, char *categoryName, int ticketPriority, char *ticketDescription, char *assetName);
   String SolutionTicket(String ticketId, char *solutionDescription);
@@ -65,60 +60,14 @@ public:
   String TaskTicket(String ticketId, char *taskContent, int taskState, int taskTime);
   String FilesTicket(String ticketId, char *fileName, char *fileContent);
 
-  //problems
-
   String NewProblem(char *problemName, char *categoryName, int problemPriority, char *problemDescription, char *assetName);
   String SolutionProblem(String problemId, char *solutionDescription);
   String FollowupProblem(String problemId, char *followupContent);
   String TaskProblem(String problemId, char *taskContent, int taskState, int taskTime);
   String FilesProblem(String problemId, char *fileName, char *fileContent);
 
-  //geral
   void Debug(bool debug);
   void DebugConsole(int httpsResponseCode, String serverNameon, String result);
 };
-
-// authorization
-/*class Authorization
-{
-public:
-  char *tokenIot = 0;
-  char *tokenClient = 0;
-
-  Authorization(char *tokenIot, char *tokenClient);
-};
-
-class Debug
-{
-public:
-  Debug(bool debug);
-};
-
-class Problems
-{
-
-private:
-  char *_problemName;
-  char *_categoryName;
-  int _problemPriority;
-  char *_problemDescription;
-  int _eventId;
-  char *_assetName;
-  String _problemId;
-  char *serverNameon;
-  char *httpsRequestData;
-  int httpsResponseCode;
-  String urlBase;
-  String Request(String url, String requestField);
-
-public:
-  Problems(char *problemName, char *categoryName, int problemPriority, char *problemDescription, char *assetName);
-  void NewProblem();
-  void SolutionProblem(char *solutionDescription);
-  void FollowupProblem(char *followupContent);
-  void TaskProblem(char *taskContent, int taskState, int taskTime);
-  void FilesProblem(char *fileName, char *fileContent);
-};
-*/
 
 #endif
