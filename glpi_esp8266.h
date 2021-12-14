@@ -35,18 +35,19 @@
 #include <ESP8266HTTPClient.h>
 #include <ESP8266WiFi.h>
 
-class Tickets
+class GlpiIot
 {
 
 private:
-  char *_ticketName;
-  int _ticketType;
-  char *_categoryName;
-  int _ticketPriority;
-  char *_ticketDescription;
+  //tickets
+  String _ticketId;
+
+  //problems
+  String _problemId;
+
+  //geral
   long _eventId;
   char *_assetName;
-  String _ticketId;
   char *serverNameon;
   char *httpsRequestData;
   int httpsResponseCode;
@@ -54,16 +55,31 @@ private:
   String Request(String url, String requestField);
 
 public:
-  Tickets(char *ticketName, int ticketType, char *categoryName, int ticketPriority, char *ticketDescription, char *assetName);
-  void NewTicket();
-  void SolutionTicket(char *solutionDescription);
-  void FollowupTicket(char *followupContent);
-  void TaskTicket(char *taskContent, int taskState, int taskTime);
-  void FilesTicket(char *fileName, char *fileContent);
+  GlpiIot(char *tokenIot, char *tokenClient);
+
+  //tickets
+  String NewTicketIncident(char *ticketName, char *categoryName, int ticketPriority, char *ticketDescription, char *assetName);
+  String NewTicketRequest(char *ticketName, char *categoryName, int ticketPriority, char *ticketDescription, char *assetName);
+  String SolutionTicket(String ticketId, char *solutionDescription);
+  String FollowupTicket(String ticketId, char *followupContent);
+  String TaskTicket(String ticketId, char *taskContent, int taskState, int taskTime);
+  String FilesTicket(String ticketId, char *fileName, char *fileContent);
+
+  //problems
+
+  String NewProblem(char *problemName, char *categoryName, int problemPriority, char *problemDescription, char *assetName);
+  String SolutionProblem(String problemId, char *solutionDescription);
+  String FollowupProblem(String problemId, char *followupContent);
+  String TaskProblem(String problemId, char *taskContent, int taskState, int taskTime);
+  String FilesProblem(String problemId, char *fileName, char *fileContent);
+
+  //geral
+  void Debug(bool debug);
+  void DebugConsole(int httpsResponseCode, String serverNameon, String result);
 };
 
 // authorization
-class Authorization
+/*class Authorization
 {
 public:
   char *tokenIot = 0;
@@ -72,10 +88,10 @@ public:
   Authorization(char *tokenIot, char *tokenClient);
 };
 
-class Debugging
+class Debug
 {
 public:
-  Debugging(bool debug);
+  Debug(bool debug);
 };
 
 class Problems
@@ -103,5 +119,6 @@ public:
   void TaskProblem(char *taskContent, int taskState, int taskTime);
   void FilesProblem(char *fileName, char *fileContent);
 };
+*/
 
 #endif
