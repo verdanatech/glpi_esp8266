@@ -38,6 +38,7 @@ long eventId;
 char *_tokenIot;
 char *_tokenClient;
 bool _debug;
+int _eventId;
 
 GlpiIot::GlpiIot(char *tokenIot, char *tokenClient)
 {
@@ -45,11 +46,22 @@ GlpiIot::GlpiIot(char *tokenIot, char *tokenClient)
     _tokenIot = tokenIot;
     urlBase = "https://vconnector2.verdanadesk.com/api/iot/";
     _debug = false;
+    _eventId = 0;
 };
 
 void GlpiIot::Debug(bool debug)
 {
     _debug = debug;
+};
+
+void GlpiIot::SetEventId(long eventId)
+{
+    _eventId = eventId;
+};
+
+long GlpiIot::GetEventId()
+{
+    return _eventId;
 };
 
 void GlpiIot::DebugConsole(int httpsResponseCode, String serverNameon, String result)
@@ -91,7 +103,13 @@ String GlpiIot::Request(String url, String requestField)
 
 String GlpiIot::NewTicketIncident(char *ticketName, char *categoryName, int ticketPriority, char *ticketDescription, char *assetName)
 {
-    eventId = random(2147483647);
+    if (_eventId == 0)
+    {
+        long eventIdTemp = random(2147483647);
+        this->SetEventId(eventIdTemp);
+    }
+
+    eventId = this->GetEventId();
     String url = (String)urlBase + "tickets";
     String requestField = ("ticket_name= " + (String)ticketName + "&ticket_type=1" + "&category_name= " + (String)categoryName + "&ticket_description= " + (String)ticketDescription + "&ticket_priority= " + (int)ticketPriority + "&event_id= " + (int)eventId + "&asset_name= " + (String)assetName);
     return this->Request(url, requestField);
