@@ -59,6 +59,7 @@ public:
   void SolutionTicket(char *solutionDescription);
   void FollowupTicket(char *followupContent);
   void TaskTicket(char *taskContent, int taskState, int taskTime);
+  void FilesTicket(char *fileName, char *fileContent);
 };
 
 // authorization
@@ -69,6 +70,12 @@ public:
   char *tokenClient = 0;
 
   Authorization(char *tokenIot, char *tokenClient);
+};
+
+class Debugging
+{
+public:
+  Debugging(bool debug);
 };
 
 class Problems
@@ -94,6 +101,7 @@ public:
   void SolutionProblem(char *solutionDescription);
   void FollowupProblem(char *followupContent);
   void TaskProblem(char *taskContent, int taskState, int taskTime);
+  void FilesProblem(char *fileName, char *fileContent);
 };
 
 #endif

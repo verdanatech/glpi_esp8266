@@ -37,6 +37,12 @@ String _problemId;
 long _eventId;
 char *_tokenIot;
 char *_tokenClient;
+bool _debug;
+
+Debugging::Debugging(bool debug)
+{
+    _debug = debug;
+};
 
 Authorization::Authorization(char *tokenIot, char *tokenClient)
 {
@@ -71,7 +77,12 @@ String Tickets::Request(String url, String requestField)
     int httpsResponseCode = https.POST(httpsRequestData);
     String result = https.getString();
     https.end();
-    Serial.println(result); //just to know if it worked
+
+    if (_debug != false)
+    {
+        Serial.println(result);
+    }
+
     return result;
 };
 
@@ -79,7 +90,7 @@ void Tickets::NewTicket()
 {
     _eventId = random(2147483647);
     String url = (String)urlBase + "tickets";
-    String requestField = ("ticket_name= " + (String)_ticketName + "&ticket_type= " + (int)_ticketType + "&category_name= " + (String)_categoryName + "&ticket_description= " + (String)_ticketDescription + "&ticket_priority= " + (int)_ticketPriority + "&event_id= " + (int)_eventId + "&asset_name= " + (String)_assetName);
+    String requestField = ("ticket_namea= " + (String)_ticketName + "&ticket_type= " + (int)_ticketType + "&category_name= " + (String)_categoryName + "&ticket_description= " + (String)_ticketDescription + "&ticket_priority= " + (int)_ticketPriority + "&event_id= " + (int)_eventId + "&asset_name= " + (String)_assetName);
     _ticketId = this->Request(url, requestField);
 };
 
@@ -101,6 +112,13 @@ void Tickets::TaskTicket(char *taskContent, int taskState, int taskTime)
 {
     String url = (String)urlBase + "tickets/" + (String)_ticketId + "/tasks";
     String requestField = ("task_content= " + (String)taskContent + "&task_state= " + (int)taskState + "&task_time= " + (int)taskTime);
+    this->Request(url, requestField);
+};
+
+void Tickets::FilesTicket(char *fileName, char *fileContent)
+{
+    String url = (String)urlBase + "tickets/" + (String)_ticketId + "/files";
+    String requestField = ("document_content= " + (String)fileName + "&url_document= " + (String)fileContent);
     this->Request(url, requestField);
 };
 
@@ -130,7 +148,12 @@ String Problems::Request(String url, String requestField)
     int httpsResponseCode = https.POST(httpsRequestData);
     String result = https.getString();
     https.end();
-    Serial.println(result); //just to know if it worked
+
+    if (_debug != false)
+    {
+        Serial.println(result);
+    }
+
     return result;
 };
 
