@@ -68,7 +68,6 @@ public:
 
   void Debug(bool debug);
   void DebugConsole(int httpsResponseCode, String serverNameon, String result);
-
   void SetEventId(long eventId);
   long GetEventId();
 };
