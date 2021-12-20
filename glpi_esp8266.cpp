@@ -34,11 +34,18 @@
 
 String _ticketId;
 String _problemId;
-long eventId;
 char *_tokenIot;
 char *_tokenClient;
 bool _debug;
-int _eventId;
+
+int _eventIdInc;
+long eventIdInc;
+
+int _eventIdReq;
+long eventIdReq;
+
+int _eventIdPro;
+long eventIdPro;
 
 GlpiIot::GlpiIot(char *tokenIot, char *tokenClient)
 {
@@ -54,30 +61,53 @@ void GlpiIot::Debug(bool debug)
     _debug = debug;
 };
 
-void GlpiIot::SetEventId(long eventId)
+void GlpiIot::SetEventIdInc(long eventIdInc)
 {
-    _eventId = eventId;
+    _eventIdInc = eventIdInc;
 };
 
-long GlpiIot::GetEventId()
+long GlpiIot::GetEventIdInc()
 {
-    return _eventId;
+    return _eventIdInc;
 };
 
-void GlpiIot::DebugConsole(int httpsResponseCode, String serverNameon, String result)
+void GlpiIot::SetEventIdReq(long eventIdReq)
+{
+    _eventIdReq = eventIdReq;
+};
+
+long GlpiIot::GetEventIdReq()
+{
+    return _eventIdReq;
+};
+
+void GlpiIot::SetEventIdPro(long eventIdPro)
+{
+    _eventIdPro = eventIdPro;
+};
+
+long GlpiIot::GetEventIdPro()
+{
+    return _eventIdPro;
+};
+
+void GlpiIot::DebugConsole(int httpsResponseCode, String serverNameon, String result, String httpsRequestData)
 {
     if (_debug == true)
     {
-        if (httpsResponseCode != 201)
+        if (httpsResponseCode != 201 && httpsResponseCode != 200)
         {
-            Serial.print("Error - Code: " + (String)httpsResponseCode);
+            Serial.println("Error - Code: " + (String)httpsResponseCode);
+            //Serial.println(" Body of request: " + (String)httpsRequestData);
         }
-        if (httpsResponseCode == 201)
-            Serial.print("Sucess - Code: " + (String)httpsResponseCode);
+        if (httpsResponseCode == 201 || httpsResponseCode == 200)
+        {
+            Serial.println("Sucess - Code: " + (String)httpsResponseCode);
+        }
+        Serial.println(" and Url: " + (String)serverNameon);
+        Serial.println(" and ID of request: " + (String)result);
+        Serial.println("");
     }
-
-    Serial.print(" and Url: " + (String)serverNameon);
-    Serial.println(" and ID of result: " + (String)result);
 };
 
 String GlpiIot::Request(String url, String requestField)
@@ -96,93 +126,120 @@ String GlpiIot::Request(String url, String requestField)
     int httpsResponseCode = https.POST(httpsRequestData);
     String result = https.getString();
     https.end();
-    this->DebugConsole(httpsResponseCode, serverNameon, result);
+    this->DebugConsole(httpsResponseCode, serverNameon, result, httpsRequestData);
 
     return result;
 };
 
 String GlpiIot::NewTicketIncident(char *ticketName, char *categoryName, int ticketPriority, char *ticketDescription, char *assetName)
 {
-    if (_eventId == 0)
+    if (this->GetEventIdInc() == 0)
     {
         long eventIdTemp = random(2147483647);
-        this->SetEventId(eventIdTemp);
+        this->SetEventIdInc(eventIdTemp);
     }
 
-    eventId = this->GetEventId();
+    eventIdInc = this->GetEventIdInc();
     String url = (String)urlBase + "tickets";
-    String requestField = ("ticket_name= " + (String)ticketName + "&ticket_type=1" + "&category_name= " + (String)categoryName + "&ticket_description= " + (String)ticketDescription + "&ticket_priority= " + (int)ticketPriority + "&event_id= " + (int)eventId + "&asset_name= " + (String)assetName);
+    String requestField = ("ticket_name=" + (String)ticketName + "&ticket_type=1" + "&category_name=" + (String)categoryName + "&ticket_description=" + (String)ticketDescription + "&ticket_priority=" + (int)ticketPriority + "&event_id=" + (int)_eventIdInc + "&asset_name=" + (String)assetName);
     return this->Request(url, requestField);
 };
 
 String GlpiIot::NewTicketRequest(char *ticketName, char *categoryName, int ticketPriority, char *ticketDescription, char *assetName)
 {
-    eventId = random(2147483647);
+    if (this->GetEventIdReq() == 0)
+    {
+        long eventIdTemp = random(2147483647);
+        this->SetEventIdReq(eventIdTemp);
+    }
+
+    eventIdReq = this->GetEventIdReq();
     String url = (String)urlBase + "tickets";
-    String requestField = ("ticket_name= " + (String)ticketName + "&ticket_type=2" + "&category_name= " + (String)categoryName + "&ticket_description= " + (String)ticketDescription + "&ticket_priority= " + (int)ticketPriority + "&event_id= " + (int)eventId + "&asset_name= " + (String)assetName);
+    String requestField = ("ticket_name=" + (String)ticketName + "&ticket_type=2" + "&category_name=" + (String)categoryName + "&ticket_description=" + (String)ticketDescription + "&ticket_priority=" + (int)ticketPriority + "&event_id=" + (int)_eventIdReq + "&asset_name=" + (String)assetName);
     return this->Request(url, requestField);
 };
 
 String GlpiIot::SolutionTicket(String ticketId, char *solutionDescription)
 {
     String url = (String)urlBase + "tickets/" + (String)ticketId + "/solutions";
-    String requestField = ("solution_description= " + (String)solutionDescription);
+    String requestField = ("solution_description=" + (String)solutionDescription);
     return this->Request(url, requestField);
 };
 
 String GlpiIot::FollowupTicket(String ticketId, char *followupContent)
 {
     String url = (String)urlBase + "tickets/" + (String)ticketId + "/followup";
-    String requestField = ("followup_content= " + (String)followupContent);
+    String requestField = ("followup_content=" + (String)followupContent);
     return this->Request(url, requestField);
 };
 
 String GlpiIot::TaskTicket(String ticketId, char *taskContent, int taskState, int taskTime)
 {
     String url = (String)urlBase + "tickets/" + (String)ticketId + "/tasks";
-    String requestField = ("task_content= " + (String)taskContent + "&task_state= " + (int)taskState + "&task_time= " + (int)taskTime);
+    String requestField = ("task_content=" + (String)taskContent + "&task_state=" + (int)taskState + "&task_time=" + (int)taskTime);
     return this->Request(url, requestField);
 };
 
-String GlpiIot::FilesTicket(String ticketId, char *fileName, char *fileContent)
+/*String GlpiIot::FilesTicket(String ticketId, char *fileName, char *fileContent)
 {
-    String url = (String)urlBase + "tickets/" + (String)ticketId + "/files";
-    String requestField = ("document_content= " + (String)fileName + "&url_document= " + (String)fileContent);
-    return this->Request(url, requestField);
+    BearSSL::WiFiClientSecure client;
+    client.setInsecure();
+    HTTPClient https;
+    String serverNameon = (String)urlBase + "tickets/" + (String)ticketId + "/files";
+    https.begin(client, serverNameon);
+
+    https.addHeader("Content-Type:", "multipart/form-data");
+    https.addHeader("token-client", _tokenClient);
+    https.addHeader("token-iot", _tokenIot);
+
+    String httpsRequestData = ("document_content="(String)fileName + "&url_document=" + (String)fileContent);
+    int httpsResponseCode = https.POST(httpsRequestData);
+    String result = https.getString();
+    https.end();
+    Serial.println(result);
+    return result;
 };
+*/
 
 String GlpiIot::NewProblem(char *problemName, char *categoryName, int problemPriority, char *problemDescription, char *assetName)
 {
-    eventId = random(2147483647);
+    if (this->GetEventIdPro() == 0)
+    {
+        long eventIdTemp = random(2147483647);
+        this->SetEventIdPro(eventIdTemp);
+    }
+
+    eventIdPro = this->GetEventIdPro();
     String url = (String)urlBase + "problems";
-    String requestField = ("problem_name= " + (String)problemName + "&category_name= " + (String)categoryName + "&problem_description= " + (String)problemDescription + "&problem_priority= " + (int)problemPriority + "&event_id= " + (int)eventId + "&asset_name= " + (String)assetName);
+    String requestField = ("problem_name=" + (String)problemName + "&category_name=" + (String)categoryName + "&problem_description=" + (String)problemDescription + "&problem_priority=" + (int)problemPriority + "&event_id=" + (int)_eventIdPro + "&asset_name=" + (String)assetName);
     return this->Request(url, requestField);
 };
 
 String GlpiIot::SolutionProblem(String problemId, char *solutionDescription)
 {
     String url = (String)urlBase + "problems/" + (String)problemId + "/solutions";
-    String requestField = ("solution_description= " + (String)solutionDescription);
+    String requestField = ("solution_description=" + (String)solutionDescription);
     return this->Request(url, requestField);
 };
 
 String GlpiIot::FollowupProblem(String problemId, char *followupContent)
 {
     String url = (String)urlBase + "problems/" + (String)problemId + "/followup";
-    String requestField = ("followup_content= " + (String)followupContent);
+    String requestField = ("followup_content=" + (String)followupContent);
     return this->Request(url, requestField);
 };
 
 String GlpiIot::TaskProblem(String problemId, char *taskContent, int taskState, int taskTime)
 {
     String url = (String)urlBase + "problems/" + (String)problemId + "/tasks";
-    String requestField = ("task_content= " + (String)taskContent + "&task_state= " + (int)taskState + "&task_time= " + (int)taskTime);
+    String requestField = ("task_content=" + (String)taskContent + "&task_state=" + (int)taskState + "&task_time=" + (int)taskTime);
     return this->Request(url, requestField);
 };
 
-String GlpiIot::FilesProblem(String problemId, char *fileName, char *fileContent)
+/*String GlpiIot::FilesProblem(String problemId, char *fileName, char *fileContent)
 {
     String url = (String)urlBase + "problems/" + (String)problemId + "/files";
-    String requestField = ("document_content= " + (String)fileName + "&url_document= " + (String)fileContent);
+    String requestField = ("document_content=" + (String)fileName + "&url_content=@" + (String)fileContent + "&key=url_document" + "&type=file" + "&enabled=true" + "&description=");
     return this->Request(url, requestField);
 };
+*/

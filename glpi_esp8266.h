@@ -41,7 +41,6 @@ class GlpiIot
 private:
   String _ticketId;
   String _problemId;
-
   long _eventId;
   char *_assetName;
   char *serverNameon;
@@ -67,9 +66,13 @@ public:
   String FilesProblem(String problemId, char *fileName, char *fileContent);
 
   void Debug(bool debug);
-  void DebugConsole(int httpsResponseCode, String serverNameon, String result);
-  void SetEventId(long eventId);
-  long GetEventId();
+  void DebugConsole(int httpsResponseCode, String serverNameon, String result, String httpsRequestData);
+  void SetEventIdInc(long eventIdInc);
+  long GetEventIdInc();
+  void SetEventIdReq(long eventIdReq);
+  long GetEventIdReq();
+  void SetEventIdPro(long eventIdPro);
+  long GetEventIdPro();
 };
 
 #endif
