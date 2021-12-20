@@ -8,11 +8,8 @@ char *assetName = "asset name";          //device name
 
 int attempts = 50;
 
-Authorization tokens(tokenIot, tokenClient); //creating the tokens object in the authorization class to perform API authentication
-
-Tickets invasion("Damaged padlock", 1, "IoT", 4, "The padlock has been damaged", assetName); //creating an object in class tickets
-
-Problems housebreaking("Damaged door", "IoT", 6, "The main door has been damaged", assetName); //creating an object in class problems
+//creating the tokens object in the authorization class to perform API authentication
+GlpiIot invasion(tokenIot, tokenClient);
 
 void printNetworkData()
 {
@@ -69,7 +66,6 @@ void wifiConect()
 
 void setup(void)
 {
-  // put your setup code here, to run once:
   Serial.begin(115200);
 
   /*
@@ -78,27 +74,54 @@ void setup(void)
 
   wifiConect();
   printNetworkData();
-  delay(4000);
-  invasion.NewTicket(); //opening a ticket
-  delay(3000);
-  invasion.TaskTicket("Check the padlock that was damaged", 1, 0); //adding a task to the ticket
-  delay(3000);
-  invasion.FollowupTicket("Security has been notified and will proceed to the location of the lock"); //adding a follow-up to the ticket
-  delay(3000);
-  invasion.TaskTicket("Check the padlock that was damaged", 2, 300); //again adding a task to the ticket
-  delay(3000);
-  invasion.SolutionTicket("The padlock has been changed"); //adding a solution to the ticket
-  delay(3000);
-  housebreaking.NewProblem(); //opening a problem
-  delay(3000);
-  housebreaking.TaskProblem("Check the door", 1, 0);
-  delay(3000);
-  housebreaking.FollowupProblem("The security has been notified and must go to the property urgently"); //adding a follow-up to the problem
-  delay(3000);
-  housebreaking.FollowupProblem("Sign of burglary was verified"); //again adding a follow-up to the problem
-  delay(3000);
-  housebreaking.SolutionProblem("Joiner and locksmith carried out the repair of the door"); //sending a solution to the problem
+  delay(2000);
+
+  //activating debug mode
+  invasion.Debug(true);
+
+  //setting the event id for opening the new ticket of type incident
+  invasion.SetEventIdInc(908);
+
+  //setting the event id for opening the new ticket of type request
+  invasion.SetEventIdReq(564);
+
+  //setting the event id for opening the new ticket of type problem
+  invasion.SetEventIdPro(7654);
+
+  //opening new ticket of type incident
+  String ticketIncId = invasion.NewTicketIncident("Damaged padlock", "IoT", 5, "The padlock has been damaged", assetName);
+
+  //opening new ticket of type request
+  String ticketReqId = invasion.NewTicketRequest("Change door lock", "IoT", 3, "The door lock is defective", assetName);
+
+  //adding a task to the ticket
+  invasion.TaskTicket(ticketIncId, "Check the padlock that was damaged", 1, 0);
+
+  //adding a follow-up to the ticket
+  invasion.FollowupTicket(ticketIncId, "Security has been notified and will proceed to the location of the lock");
+
+  //again adding a task to the ticket
+  invasion.TaskTicket(ticketIncId, "Check the padlock that was damaged", 2, 300);
+
+  //adding a solution to the ticket
+  invasion.SolutionTicket(ticketIncId, "The padlock has been changed");
+
+  //opening a problem
+  String problemId = invasion.NewProblem("Damaged door", "IoT", 6, "The main door has been damaged", assetName);
+
+  //adding a task to the problem
+  invasion.TaskProblem(problemId, "Check the door", 1, 0);
+
+  //adding a follow-up to the problem
+  invasion.FollowupProblem(problemId, "The security has been notified and must go to the property urgently");
+
+  //again adding a follow-up to the problem
+  invasion.FollowupProblem(problemId, "Sign of burglary was verified");
+
+  //sending a solution to the problem
+  invasion.SolutionProblem(problemId, "Joiner and locksmith carried out the repair of the door");
 }
+
 void loop()
 {
   // put your main code here, to run repeatedly:
