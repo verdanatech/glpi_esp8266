@@ -95,8 +95,6 @@ This method opens a new ticket of type incident.
 
  - **ticketName:** is the name that will be given to the ticket.
 
- - **ticketType:** here we define the ticket type. We currently use two types: type 1 is incident, type 2 is requisition.
-
  - **categoryName:** here is defined the category of the ticket. NOTE: the category must be existing in the GLPi system.
 
  - **ticketPriority:** here the priority of the ticket is defined. We use values from 1 to 6, with 1 being a very low priority level and 6 being a critical priority level.
@@ -111,8 +109,6 @@ This method opens a new ticket of type request.
 ### Parameters
 
  - **ticketName:** is the name that will be given to the ticket.
-
- - **ticketType:** here we define the ticket type. We currently use two types: type 1 is incident, type 2 is requisition.
 
  - **categoryName:** here is defined the category of the ticket. NOTE: the category must be existing in the GLPi system.
 
