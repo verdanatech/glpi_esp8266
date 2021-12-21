@@ -4,13 +4,13 @@ glpi_esp8266 Consumes Verdanatech's vConnector API, thus allowing integration be
 
 # License
 
-    This file is part of glpi_esp8266.
+ This file is part of glpi_esp8266.
 
-      glpi_esp8266 is free software developed and supported by Verdanatech Soluções em TI and contributors.
-      You can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.
-      glpi_esp8266 is distributed in the hope that it will be useful, but without any warranty; without even the implied warranty of merchantantability or fitness for a particular purpose.
-      See the GNU General Public License for more details.
-      You should have received a copy of the GNU General Public License along with glpi_esp8266. If not, see <http://www.gnu.org/licenses/>.
+glpi_esp8266 is free software developed and supported by Verdanatech Soluções em TI and contributors.
+You can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.
+glpi_esp8266 is distributed in the hope that it will be useful, but without any warranty; without even the implied warranty of merchantantability or fitness for a particular purpose.
+See the GNU General Public License for more details.
+You should have received a copy of the GNU General Public License along with glpi_esp8266. If not, see <http://www.gnu.org/licenses/>.
 
 ---
 
@@ -22,15 +22,15 @@ Be a Verdanatech GLPi user.
 
 # Installation
 
-    1. Download the latest version from the library at https://github.com/verdanatech/glpi_esp8266 and save the file somewhere
+ 1. Download the latest version from the library at https://github.com/verdanatech/glpi_esp8266 and save the file somewhere
 
-    2. In Arduino IDE, go to Sketch menu option -> Import Library -> Add Library...
+2. In Arduino IDE, go to Sketch menu option -> Import Library -> Add Library...
 
-    3. Find the zip file you saved in the first step and choose it
+ 3. Find the zip file you saved in the first step and choose it
 
-    4. Check if it was added successfully by opening the Sketch menu -> Import Library. 
+ 4. Check if it was added successfully by opening the Sketch menu -> Import Library. 
 
-    5. You should now see glpi_esp8266 listed among the available libraries.
+5. You should now see glpi_esp8266 listed among the available libraries.
 
 # Use
 
