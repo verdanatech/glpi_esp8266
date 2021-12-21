@@ -21,7 +21,7 @@ You should have received a copy of the GNU General Public License along with glp
 
 Requires import of libraries ESP8266HTTPClient.h, ESP8266WiFi.h
 
-Be a Verdanatech GLPi user.
+The user must have an account on Verdanatech's Vconnector service.
 
 # Installation
 
