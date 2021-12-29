@@ -45,6 +45,9 @@ private:
   char *_assetName;
   char *serverNameon;
   char *httpsRequestData;
+  const char *_result;
+  const char *_message;
+  const char *input;
   int httpsResponseCode;
   String urlBase;
   String Request(String url, String requestField);
@@ -65,6 +68,7 @@ public:
   String TaskProblem(String problemId, char *taskContent, int taskState, int taskTime);
   String FilesProblem(String problemId, char *fileName, char *fileContent);
 
+  void resultOfGet(int httpsResponseCode, String payload);
   void Debug(bool debug);
   void DebugConsole(int httpsResponseCode, String serverNameon, String result, String httpsRequestData);
   void SetEventIdInc(long eventIdInc);

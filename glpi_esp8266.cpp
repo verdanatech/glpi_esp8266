@@ -31,12 +31,16 @@
 #include "glpi_esp8266.h"
 #include <ESP8266HTTPClient.h>
 #include <ESP8266WiFi.h>
+#include <WiFiClient.h>
+#include <ArduinoJson.h>
 
 String _ticketId;
 String _problemId;
 char *_tokenIot;
 char *_tokenClient;
 bool _debug;
+const char *_result;
+const char *_message;
 
 int _eventIdInc;
 long eventIdInc;
@@ -91,6 +95,40 @@ long GlpiIot::GetEventIdPro()
     return _eventIdPro;
 };
 
+void GlpiIot::resultOfGet(int httpsResponseCode, String payload)
+{
+    if (httpsResponseCode == 201 || httpsResponseCode == 200)
+    {
+        // Allocate JsonBuffer
+        // Use arduinojson.org/assistant to compute the capacity.
+        const size_t capacity = JSON_OBJECT_SIZE(3) + JSON_ARRAY_SIZE(2) + 60;
+        DynamicJsonBuffer jsonBuffer(capacity);
+
+        // Parse JSON object
+        JsonObject &root = jsonBuffer.parseObject(payload);
+        if (!root.success())
+        {
+            Serial.println(F("Parsing failed!"));
+            return;
+        }
+
+        // Decode JSON/Extract values
+        Serial.println(F("Response:"));
+        Serial.println(root["result"].as<char *>());
+        Serial.println(root["message"].as<char *>());
+        //Serial.println(root["data"][0].as<char*>());
+        //Serial.println(root["data"][1].as<char*>());
+    }
+    else
+    {
+        Serial.println("Error in response");
+    }
+
+    //http.end();  //Close connection
+
+    delay(5000); //GET Data at every 5 seconds
+};
+
 void GlpiIot::DebugConsole(int httpsResponseCode, String serverNameon, String result, String httpsRequestData)
 {
     if (_debug == true)
@@ -98,15 +136,15 @@ void GlpiIot::DebugConsole(int httpsResponseCode, String serverNameon, String re
         if (httpsResponseCode != 201 && httpsResponseCode != 200)
         {
             Serial.println("Error - Code: " + (String)httpsResponseCode);
-            //Serial.println(" Body of request: " + (String)httpsRequestData);
         }
         if (httpsResponseCode == 201 || httpsResponseCode == 200)
         {
             Serial.println("Sucess - Code: " + (String)httpsResponseCode);
         }
-        Serial.println(" and Url: " + (String)serverNameon);
-        Serial.println(" and ID of request: " + (String)result);
-        Serial.println("");
+        Serial.println(" Url: " + (String)serverNameon);
+        Serial.println(" and ID of request: ");
+        //Serial.println(_result);
+        //Serial.println(_message);
     }
 };
 
@@ -124,11 +162,12 @@ String GlpiIot::Request(String url, String requestField)
 
     String httpsRequestData = requestField;
     int httpsResponseCode = https.POST(httpsRequestData);
-    String result = https.getString();
+    String payload = https.getString();
+    this->resultOfGet(httpsResponseCode, payload);
     https.end();
-    this->DebugConsole(httpsResponseCode, serverNameon, result, httpsRequestData);
+    this->DebugConsole(httpsResponseCode, serverNameon, payload, httpsRequestData);
 
-    return result;
+    return payload;
 };
 
 String GlpiIot::NewTicketIncident(char *ticketName, char *categoryName, int ticketPriority, char *ticketDescription, char *assetName)
