@@ -39,8 +39,8 @@ String _problemId;
 char *_tokenIot;
 char *_tokenClient;
 bool _debug;
-const char *_result;
-const char *_message;
+String _result;
+String _message;
 
 int _eventIdInc;
 long eventIdInc;
@@ -99,12 +99,9 @@ void GlpiIot::resultOfGet(int httpsResponseCode, String payload)
 {
     if (httpsResponseCode == 201 || httpsResponseCode == 200)
     {
-        // Allocate JsonBuffer
-        // Use arduinojson.org/assistant to compute the capacity.
         const size_t capacity = JSON_OBJECT_SIZE(3) + JSON_ARRAY_SIZE(2) + 60;
         DynamicJsonBuffer jsonBuffer(capacity);
 
-        // Parse JSON object
         JsonObject &root = jsonBuffer.parseObject(payload);
         if (!root.success())
         {
@@ -112,21 +109,15 @@ void GlpiIot::resultOfGet(int httpsResponseCode, String payload)
             return;
         }
 
-        // Decode JSON/Extract values
-        Serial.println(F("Response:"));
-        Serial.println(root["result"].as<char *>());
-        Serial.println(root["message"].as<char *>());
-        //Serial.println(root["data"][0].as<char*>());
-        //Serial.println(root["data"][1].as<char*>());
+        _result = root["result"].as<char *>();
+        _message = root["message"].as<char *>();
     }
     else
     {
         Serial.println("Error in response");
     }
 
-    //http.end();  //Close connection
-
-    delay(5000); //GET Data at every 5 seconds
+    delay(5000);
 };
 
 void GlpiIot::DebugConsole(int httpsResponseCode, String serverNameon, String result, String httpsRequestData)
@@ -140,11 +131,12 @@ void GlpiIot::DebugConsole(int httpsResponseCode, String serverNameon, String re
         if (httpsResponseCode == 201 || httpsResponseCode == 200)
         {
             Serial.println("Sucess - Code: " + (String)httpsResponseCode);
+            Serial.print("ID of request: ");
+            Serial.println(_result);
         }
-        Serial.println(" Url: " + (String)serverNameon);
-        Serial.println(" and ID of request: ");
-        //Serial.println(_result);
-        //Serial.println(_message);
+        Serial.println("url: " + (String)serverNameon);
+        Serial.print("and response of request: ");
+        Serial.println(_message);
     }
 };
 

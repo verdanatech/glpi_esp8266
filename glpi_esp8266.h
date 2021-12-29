@@ -45,9 +45,8 @@ private:
   char *_assetName;
   char *serverNameon;
   char *httpsRequestData;
-  const char *_result;
-  const char *_message;
-  const char *input;
+  String _result;
+  String _message;
   int httpsResponseCode;
   String urlBase;
   String Request(String url, String requestField);
