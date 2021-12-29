@@ -163,8 +163,8 @@ String GlpiIot::Request(String url, String requestField)
     String httpsRequestData = requestField;
     int httpsResponseCode = https.POST(httpsRequestData);
     String payload = https.getString();
-    this->resultOfGet(httpsResponseCode, payload);
     https.end();
+    this->resultOfGet(httpsResponseCode, payload);
     this->DebugConsole(httpsResponseCode, serverNameon, payload, httpsRequestData);
 
     return payload;
