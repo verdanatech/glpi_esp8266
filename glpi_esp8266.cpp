@@ -95,7 +95,7 @@ long GlpiIot::GetEventIdPro()
     return _eventIdPro;
 };
 
-void GlpiIot::resultOfGet(int httpsResponseCode, String payload)
+void GlpiIot::ResultOfGet(int httpsResponseCode, String payload)
 {
     if (httpsResponseCode == 201 || httpsResponseCode == 200)
     {
@@ -116,11 +116,9 @@ void GlpiIot::resultOfGet(int httpsResponseCode, String payload)
     {
         Serial.println("Error in response");
     }
-
-    delay(5000);
 };
 
-void GlpiIot::DebugConsole(int httpsResponseCode, String serverNameon, String result, String httpsRequestData)
+void GlpiIot::DebugConsole(int httpsResponseCode, String serverNameon, String result, String message)
 {
     if (_debug == true)
     {
@@ -132,11 +130,12 @@ void GlpiIot::DebugConsole(int httpsResponseCode, String serverNameon, String re
         {
             Serial.println("Sucess - Code: " + (String)httpsResponseCode);
             Serial.print("ID of request: ");
-            Serial.println(_result);
+            Serial.println(result);
         }
         Serial.println("url: " + (String)serverNameon);
         Serial.print("and response of request: ");
-        Serial.println(_message);
+        Serial.println(message);
+        Serial.println();
     }
 };
 
@@ -156,10 +155,14 @@ String GlpiIot::Request(String url, String requestField)
     int httpsResponseCode = https.POST(httpsRequestData);
     String payload = https.getString();
     https.end();
-    this->resultOfGet(httpsResponseCode, payload);
-    this->DebugConsole(httpsResponseCode, serverNameon, payload, httpsRequestData);
+    this->ResultOfGet(httpsResponseCode, payload);
+    this->DebugConsole(httpsResponseCode, serverNameon, _result, _message);
 
-    return payload;
+    String result = _result;
+    _result = "";
+    _message = "";
+
+    return result;
 };
 
 String GlpiIot::NewTicketIncident(char *ticketName, char *categoryName, int ticketPriority, char *ticketDescription, char *assetName)

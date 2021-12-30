@@ -67,9 +67,9 @@ public:
   String TaskProblem(String problemId, char *taskContent, int taskState, int taskTime);
   String FilesProblem(String problemId, char *fileName, char *fileContent);
 
-  void resultOfGet(int httpsResponseCode, String payload);
+  void ResultOfGet(int httpsResponseCode, String payload);
   void Debug(bool debug);
-  void DebugConsole(int httpsResponseCode, String serverNameon, String result, String httpsRequestData);
+  void DebugConsole(int httpsResponseCode, String serverNameon, String result, String message);
   void SetEventIdInc(long eventIdInc);
   long GetEventIdInc();
   void SetEventIdReq(long eventIdReq);
