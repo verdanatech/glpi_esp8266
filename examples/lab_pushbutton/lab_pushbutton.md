@@ -31,3 +31,7 @@ The methods used in this project were:
 - **4 push buttons**
 
 - **USB cable V8**
+
+# Circuits
+
+![circuit](/examples/lab_pushbutton/circuito%20-%20lab_pushbutton.png)
