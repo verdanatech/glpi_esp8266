@@ -11,7 +11,7 @@ int attempts = 50;
 const int openTicket = D0;      //button in pin D0
 const int followUp = D1;        //button in pin D1
 const int task = D2;            //button in pin D2
-const int solution = D4;        //button in pin D3
+const int solution = D4;        //button in pin D4
 String ticketIncId;
 
 //creating the tokens object in the authorization class to perform API authentication
