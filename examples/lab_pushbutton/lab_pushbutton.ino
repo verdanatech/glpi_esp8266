@@ -2,8 +2,8 @@
 
 char SSID[] = "";               //network SSID
 char NETKEY[] = "";             //network access key
-char *tokenIot = "";            //token iot
-char *tokenClient = "";         //token client
+char *tokenIot = "";            //your token iot
+char *tokenClient = "";         //your token client
 char *assetName = "";          //device name
 
 int attempts = 50;
@@ -71,7 +71,7 @@ void wifiConect()
 }
 
 void setup(void){
-    
+
   Serial.begin(115200);
 
   pinMode(openTicket, INPUT);
