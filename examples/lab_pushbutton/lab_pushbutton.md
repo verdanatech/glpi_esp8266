@@ -32,6 +32,6 @@ The methods used in this project were:
 
 - **USB cable V8**
 
-# Circuits
+# Circuit
 
 ![circuit](/examples/lab_pushbutton/circuito%20-%20lab_pushbutton.png)
