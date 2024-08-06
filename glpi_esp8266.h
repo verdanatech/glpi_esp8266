@@ -32,47 +32,50 @@
 
 #define glpi_esp
 
-#include <ESP8266HTTPClient.h>
-#include <ESP8266WiFi.h>
+#include <HTTPClient.h>
+#include <WiFi.h>
 
 class GlpiIot
 {
 
 private:
-  String _ticketId;
-  String _problemId;
-  long _eventId;
-  char *_assetName;
-  char *serverNameon;
-  char *httpsRequestData;
-  int httpsResponseCode;
-  String urlBase;
-  String Request(String url, String requestField);
+    String _ticketId;
+    String _problemId;
+    long _eventIdInc;
+    long _eventIdReq;
+    long _eventIdPro;
+    char *_tokenIot;
+    char *_tokenClient;
+    bool _debug;
+    String urlBase;
+    String Request(String url, String requestField);
 
 public:
-  GlpiIot(char *tokenIot, char *tokenClient);
+    GlpiIot(char *tokenIot, char *tokenClient);
 
-  String NewTicketIncident(char *ticketName, char *categoryName, int ticketPriority, char *ticketDescription, char *assetName);
-  String NewTicketRequest(char *ticketName, char *categoryName, int ticketPriority, char *ticketDescription, char *assetName);
-  String SolutionTicket(String ticketId, char *solutionDescription);
-  String FollowupTicket(String ticketId, char *followupContent);
-  String TaskTicket(String ticketId, char *taskContent, int taskState, int taskTime);
-  String FilesTicket(String ticketId, char *fileName, char *fileContent);
+    String NewTicketIncident(char *ticketName, char *categoryName, int ticketPriority, String ticketDescription, char *assetName);
+    String NewTicketRequest(char *ticketName, char *categoryName, int ticketPriority, char *ticketDescription, char *assetName);
+    String SolutionTicket(String ticketId, String solutionDescription);
+    String FollowupTicket(String ticketId, char *followupContent);
+    String TaskTicket(String ticketId, char *taskContent, int taskState, int taskTime);
+    // Remove FilesTicket if not used; if used, adapt to ESP32
+    // String FilesTicket(String ticketId, char *fileName, char *fileContent);
 
-  String NewProblem(char *problemName, char *categoryName, int problemPriority, char *problemDescription, char *assetName);
-  String SolutionProblem(String problemId, char *solutionDescription);
-  String FollowupProblem(String problemId, char *followupContent);
-  String TaskProblem(String problemId, char *taskContent, int taskState, int taskTime);
-  String FilesProblem(String problemId, char *fileName, char *fileContent);
+    String NewProblem(char *problemName, char *categoryName, int problemPriority, char *problemDescription, char *assetName);
+    String SolutionProblem(String problemId, char *solutionDescription);
+    String FollowupProblem(String problemId, char *followupContent);
+    String TaskProblem(String problemId, char *taskContent, int taskState, int taskTime);
+    // Remove FilesProblem if not used; if used, adapt to ESP32
+    // String FilesProblem(String problemId, char *fileName, char *fileContent);
 
-  void Debug(bool debug);
-  void DebugConsole(int httpsResponseCode, String serverNameon, String result, String httpsRequestData);
-  void SetEventIdInc(long eventIdInc);
-  long GetEventIdInc();
-  void SetEventIdReq(long eventIdReq);
-  long GetEventIdReq();
-  void SetEventIdPro(long eventIdPro);
-  long GetEventIdPro();
+    void Debug(bool debug);
+    void DebugConsole(int httpsResponseCode, String serverNameon, String result, String httpsRequestData);
+    void SetEventIdInc(long eventIdInc);
+    long GetEventIdInc();
+    void SetEventIdReq(long eventIdReq);
+    long GetEventIdReq();
+    void SetEventIdPro(long eventIdPro);
+    long GetEventIdPro();
 };
 
 #endif
