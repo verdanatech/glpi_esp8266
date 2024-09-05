@@ -102,18 +102,29 @@ void GlpiIot::DebugConsole(int httpsResponseCode, String serverNameon, String re
 
 String GlpiIot::Request(String url, String requestField) {
     HTTPClient https;
-    https.begin(url);
 
-    https.addHeader("Content-Type", "application/x-www-form-urlencoded");
-    https.addHeader("token-client", _tokenClient);
-    https.addHeader("token-iot", _tokenIot);
+    if (https.begin(url)) {  // Verifica se a conexão foi estabelecida
+        https.addHeader("Content-Type", "application/x-www-form-urlencoded");
+        https.addHeader("token-client", _tokenClient);
+        https.addHeader("token-iot", _tokenIot);
 
-    int httpsResponseCode = https.POST(requestField);
-    String result = https.getString();
-    https.end();
-    this->DebugConsole(httpsResponseCode, url, result, requestField);
+        int httpsResponseCode = https.POST(requestField);
+        String result;
 
-    return result;
+        if (httpsResponseCode > 0) {  // Verifica se a resposta é positiva
+            result = https.getString();
+        } else {
+            result = "Error on HTTP request: " + String(httpsResponseCode);
+        }
+
+        https.end();
+        this->DebugConsole(httpsResponseCode, url, result, requestField);
+        return result;
+
+    } else {
+        this->DebugConsole(-1, url, "Failed to connect", requestField);
+        return "Connection failed";
+    }
 }
 
 String GlpiIot::NewTicketIncident(char *ticketName, char *categoryName, int ticketPriority, String ticketDescription, char *assetName) {
