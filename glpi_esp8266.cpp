@@ -29,6 +29,7 @@
  */
 
 #include "glpi_esp8266.h"
+#include <WiFiClientSecure.h>
 #include <HTTPClient.h>
 #include <WiFi.h>
 
@@ -101,6 +102,14 @@ void GlpiIot::DebugConsole(int httpsResponseCode, String serverNameon, String re
 }
 
 String GlpiIot::Request(String url, String requestField) {
+    if (!WiFi.isConnected()) {  // Verifica se o Wi-Fi está conectado
+        Serial.println("Wi-Fi não está conectado.");
+        return "Wi-Fi desconectado";
+    }
+
+    WiFiClientSecure client;  // Utiliza HTTPS
+    client.setTimeout(15000);  // Define timeout de 15 segundos para a conexão
+
     HTTPClient https;
 
     if (https.begin(url)) {  // Verifica se a conexão foi estabelecida
